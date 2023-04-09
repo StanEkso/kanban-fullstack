@@ -9,6 +9,8 @@ import { EncryptService } from './encrypt/encrypt.service';
 import { EncryptModule } from './encrypt/encrypt.module';
 import { BoardModule } from './board/board.module';
 import { Board } from './board/board.entity';
+import { ColumnModule } from './column/column.module';
+import { ColumnEntity } from './column/column.entity';
 
 @Module({
   imports: [
@@ -20,12 +22,13 @@ import { Board } from './board/board.entity';
       username: 'postgres',
       password: 'root',
       database: 'courseworkdb',
-      entities: [User, Board],
+      entities: [User, Board, ColumnEntity],
       synchronize: true,
     }),
     AuthModule,
     EncryptModule,
     BoardModule,
+    ColumnModule,
   ],
   controllers: [AppController],
   providers: [AppService, EncryptService],

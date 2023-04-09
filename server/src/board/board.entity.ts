@@ -1,9 +1,16 @@
+import { ColumnEntity } from 'src/column/column.entity';
 import { User } from 'src/user/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'boards' })
 export class Board {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn('identity')
   readonly id: number;
 
   @Column({ nullable: false })
@@ -17,4 +24,7 @@ export class Board {
 
   @ManyToOne(() => User, (u) => u.id)
   owner: User;
+
+  @OneToMany(() => ColumnEntity, (c) => c.id)
+  columns: ColumnEntity[];
 }

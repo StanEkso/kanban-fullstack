@@ -22,4 +22,24 @@ export class BoardService {
     board.owner = userCandidate;
     return this.boardRepository.save(board);
   }
+
+  async getUserBoards(userId: number) {
+    const userBoards = await this.boardRepository.findBy({
+      owner: { id: userId },
+    });
+    return userBoards;
+  }
+
+  async getBoardViaId(id: number) {
+    const candidate = await this.boardRepository.findOne({
+      where: { id },
+      relations: {
+        columns: true,
+      },
+    });
+    if (!candidate) {
+      throw new BadRequestException('No such board');
+    }
+    return candidate;
+  }
 }

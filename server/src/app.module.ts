@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { User } from './user/user.entity';
+import { EncryptService } from './encrypt/encrypt.service';
+import { EncryptModule } from './encrypt/encrypt.module';
 
 @Module({
   imports: [
@@ -14,11 +18,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: 'postgres',
       password: 'root',
       database: 'courseworkdb',
-      entities: [],
+      entities: [User],
       synchronize: true,
     }),
+    AuthModule,
+    EncryptModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, EncryptService],
 })
 export class AppModule {}

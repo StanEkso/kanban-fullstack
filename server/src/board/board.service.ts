@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { Board } from './board.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -41,5 +45,23 @@ export class BoardService {
       throw new BadRequestException('No such board');
     }
     return candidate;
+  }
+
+  async getUserBoard(boardId: number, userId: number) {
+    const candidate = await this.boardRepository.findOne({
+      where: { id: boardId },
+      relations: {
+        columns: true,
+        owner: true,
+      },
+    });
+    if (!candidate) {
+      throw new BadRequestException('No such board');
+    }
+    const { owner, ...rest } = candidate;
+    if (owner.id !== userId) {
+      throw new ForbiddenException("You aren't allowed to check this board");
+    }
+    return rest;
   }
 }

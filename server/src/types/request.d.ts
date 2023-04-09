@@ -4,7 +4,7 @@ export {};
 declare global {
   namespace Express {
     export interface Request {
-      userObject?: User;
+      userObject?: Omit<User, 'password'> | null;
     }
   }
 }

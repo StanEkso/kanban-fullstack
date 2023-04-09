@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { EncryptService } from 'src/encrypt/encrypt.service';
 import { UserCreateDto } from 'src/user/dto/user-create-dto';
 import { UserLoginDto } from 'src/user/dto/user-login-dto';
+import { User } from 'src/user/user.entity';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -9,6 +11,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly encryptService: EncryptService,
+    private readonly jwtService: JwtService,
   ) {}
   async createUser(userCreateDto: UserCreateDto) {
     const { password, ...rest } = userCreateDto;
@@ -29,7 +32,18 @@ export class AuthService {
     if (!this.encryptService.isPasswordsEquals(password, candidate.password)) {
       throw new BadRequestException('No user with such data!');
     }
-    const { password: _password, ...dto } = candidate;
-    return dto;
+    return {
+      accessToken: await this.jwtService.signAsync(
+        this.omitPassword(candidate),
+      ),
+    };
+  }
+
+  private omitPassword(user: User) {
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
   }
 }

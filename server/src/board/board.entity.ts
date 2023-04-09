@@ -22,9 +22,9 @@ export class Board {
   @Column({ nullable: false, default: '', type: 'text' })
   readonly description: string;
 
-  @ManyToOne(() => User, (u) => u.id)
+  @ManyToOne(() => User, (u) => u.ownedBoards)
   owner: User;
 
-  @OneToMany(() => ColumnEntity, (c) => c.id)
+  @OneToMany(() => ColumnEntity, (c) => c.board)
   columns: ColumnEntity[];
 }

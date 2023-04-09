@@ -9,6 +9,6 @@ export class ColumnEntity {
   @Column({ nullable: false })
   readonly title: string;
 
-  @ManyToOne(() => Board, (b) => b.id)
+  @ManyToOne(() => Board, (b) => b.columns)
   board: Board;
 }

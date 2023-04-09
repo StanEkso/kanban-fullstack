@@ -15,6 +15,6 @@ export class User {
   @Column({ nullable: false })
   readonly password: string;
 
-  @OneToMany(() => Board, (b) => b.id)
+  @OneToMany(() => Board, (b) => b.owner)
   readonly ownedBoards: Board[];
 }

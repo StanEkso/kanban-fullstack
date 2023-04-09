@@ -59,7 +59,7 @@ export class BoardService {
       throw new BadRequestException('No such board');
     }
     const { owner, ...rest } = candidate;
-    if (owner.id !== userId) {
+    if (owner.id !== userId && !rest.isPublic) {
       throw new ForbiddenException("You aren't allowed to check this board");
     }
     return rest;

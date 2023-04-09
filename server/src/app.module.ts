@@ -11,6 +11,8 @@ import { BoardModule } from './board/board.module';
 import { Board } from './board/board.entity';
 import { ColumnModule } from './column/column.module';
 import { ColumnEntity } from './column/column.entity';
+import { TokenGuard } from './auth/token.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -31,6 +33,13 @@ import { ColumnEntity } from './column/column.entity';
     ColumnModule,
   ],
   controllers: [AppController],
-  providers: [AppService, EncryptService],
+  providers: [
+    AppService,
+    EncryptService,
+    {
+      provide: APP_GUARD,
+      useClass: TokenGuard,
+    },
+  ],
 })
 export class AppModule {}

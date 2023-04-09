@@ -34,7 +34,6 @@ export class BoardController {
   async createBoardColumn(@Body() createColumnDto: ColumnCreateDto) {
     return await this.columnService.createColumn(createColumnDto);
   }
-  @UseGuards(AuthGuard)
   @Get('/:boardId')
   async getUserBoard(
     @Param('boardId') boardId: number,

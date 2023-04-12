@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardCreateDto } from './dto/board-create-dto';
 import { UserService } from 'src/user/user.service';
+import { BoardAccessType } from './access/access-type';
 
 @Injectable()
 export class BoardService {
@@ -58,10 +59,28 @@ export class BoardService {
     if (!candidate) {
       throw new BadRequestException('No such board');
     }
-    const { owner, ...rest } = candidate;
-    if (owner.id !== userId && !rest.isPublic) {
-      throw new ForbiddenException("You aren't allowed to check this board");
+    const accessType = this.getAccessType(candidate, userId);
+    if (accessType === BoardAccessType.FORBIDDEN) {
+      throw new ForbiddenException("You aren't allowed to check this board!");
     }
-    return rest;
+    return {
+      ...candidate,
+      accessType,
+    };
+  }
+
+  private getAccessType(board: Board, userId: number): BoardAccessType {
+    const { owner, ...rest } = board;
+    if (owner.id === userId) {
+      return BoardAccessType.FULL;
+    }
+    // TODO: Logic for members of board
+    if (false /* board.members */) {
+      return BoardAccessType.EDIT;
+    }
+    if (rest.isPublic) {
+      return BoardAccessType.VIEW_ONLY;
+    }
+    return BoardAccessType.FORBIDDEN;
   }
 }

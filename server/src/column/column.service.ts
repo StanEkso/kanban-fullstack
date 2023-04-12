@@ -27,4 +27,8 @@ export class ColumnService {
     column.board = boardCandidate;
     return this.columnRepository.save(column);
   }
+
+  async getColumnById(columnId: number) {
+    return await this.columnRepository.findOneBy({ id: columnId });
+  }
 }

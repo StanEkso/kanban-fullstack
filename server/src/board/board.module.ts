@@ -6,6 +6,7 @@ import { Board } from './board.entity';
 import { UserModule } from 'src/user/user.module';
 import { ColumnEntity } from 'src/column/column.entity';
 import { ColumnModule } from 'src/column/column.module';
+import { TaskModule } from 'src/task/task.module';
 
 @Module({
   controllers: [BoardController],
@@ -14,6 +15,7 @@ import { ColumnModule } from 'src/column/column.module';
     TypeOrmModule.forFeature([Board, ColumnEntity]),
     UserModule,
     forwardRef(() => ColumnModule),
+    TaskModule,
   ],
   exports: [BoardService],
 })

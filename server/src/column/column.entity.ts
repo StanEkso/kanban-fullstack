@@ -1,5 +1,12 @@
 import { Board } from 'src/board/board.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Task } from 'src/task/task.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'columns' })
 export class ColumnEntity {
@@ -11,4 +18,7 @@ export class ColumnEntity {
 
   @ManyToOne(() => Board, (b) => b.columns)
   board: Board;
+
+  @OneToMany(() => Task, (t) => t.column)
+  tasks: Task[];
 }

@@ -13,6 +13,8 @@ import { ColumnModule } from './column/column.module';
 import { ColumnEntity } from './column/column.entity';
 import { TokenGuard } from './auth/token.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { TaskModule } from './task/task.module';
+import { Task } from './task/task.entity';
 
 @Module({
   imports: [
@@ -24,13 +26,14 @@ import { APP_GUARD } from '@nestjs/core';
       username: 'postgres',
       password: 'root',
       database: 'courseworkdb',
-      entities: [User, Board, ColumnEntity],
+      entities: [User, Board, ColumnEntity, Task],
       synchronize: true,
     }),
     AuthModule,
     EncryptModule,
     BoardModule,
     ColumnModule,
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [

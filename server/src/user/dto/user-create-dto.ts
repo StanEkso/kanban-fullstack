@@ -1,4 +1,5 @@
-import { IsEmail, IsString, IsStrongPassword, Length } from 'class-validator';
+import { IsEmail, IsString, Length } from 'class-validator';
+import { Match } from 'src/decorators/match.decorator';
 
 export class UserCreateDto {
   @IsEmail({}, { message: 'Email should be a valid email' })
@@ -10,4 +11,13 @@ export class UserCreateDto {
     message: 'Password length should be greater than 8 and lower than 24',
   })
   readonly password: string;
+
+  @IsString()
+  @Length(8, 24, {
+    message: 'Password length should be greater than 8 and lower than 24',
+  })
+  @Match(UserCreateDto, (o) => o.password, {
+    message: 'Passwords should match!',
+  })
+  readonly repeatPassword: string;
 }

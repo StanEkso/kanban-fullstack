@@ -39,4 +39,12 @@ export class UserService {
   async getUserById(id: number): Promise<User | null> {
     return await this.userRepository.findOneBy({ id });
   }
+
+  public prepareUser(user: User) {
+    return {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
+  }
 }

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
@@ -41,7 +39,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
     ColumnModule,
     TaskModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, EncryptService],
+  controllers: [],
+  providers: [EncryptService],
 })
 export class AppModule {}

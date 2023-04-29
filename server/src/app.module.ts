@@ -11,23 +11,30 @@ import { BoardModule } from './board/board.module';
 import { Board } from './board/board.entity';
 import { ColumnModule } from './column/column.module';
 import { ColumnEntity } from './column/column.entity';
-import { TokenGuard } from './auth/token.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { TaskModule } from './task/task.module';
 import { Task } from './task/task.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CONFIG_MODULE_CONFIG } from './config';
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(CONFIG_MODULE_CONFIG),
     UserModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'root',
-      database: 'courseworkdb',
-      entities: [User, Board, ColumnEntity, Task],
-      synchronize: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        url: config.getOrThrow<string>('DATABASE_URL'),
+        username: config.getOrThrow<string>('DATABASE_USERNAME'),
+        password: config.getOrThrow<string>('DATABASE_PASSWORD'),
+        entities: [Task, User, Board, ColumnEntity],
+        port: 5432,
+        synchronize: isDevelopment,
+      }),
     }),
     AuthModule,
     EncryptModule,
@@ -36,13 +43,6 @@ import { Task } from './task/task.entity';
     TaskModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    EncryptService,
-    {
-      provide: APP_GUARD,
-      useClass: TokenGuard,
-    },
-  ],
+  providers: [AppService, EncryptService],
 })
 export class AppModule {}

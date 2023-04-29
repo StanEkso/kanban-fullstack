@@ -11,7 +11,6 @@ import { BoardModule } from './board/board.module';
 import { Board } from './board/board.entity';
 import { ColumnModule } from './column/column.module';
 import { ColumnEntity } from './column/column.entity';
-import { APP_GUARD } from '@nestjs/core';
 import { TaskModule } from './task/task.module';
 import { Task } from './task/task.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';

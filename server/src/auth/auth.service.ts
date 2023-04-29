@@ -34,16 +34,19 @@ export class AuthService {
     }
     return {
       accessToken: await this.jwtService.signAsync(
-        this.omitPassword(candidate),
+        this.userService.prepareUser(candidate),
       ),
     };
   }
+  async validateUser(username: string, password: string) {
+    const user = await this.userService.getUserByUsername(username);
+    if (user && (await this.validatePassword(user, password))) {
+      return this.userService.prepareUser(user);
+    }
+    return null;
+  }
 
-  private omitPassword(user: User) {
-    return {
-      id: user.id,
-      username: user.username,
-      email: user.email,
-    };
+  private async validatePassword(user: User, password: string) {
+    return this.encryptService.isPasswordsEquals(user.password, password);
   }
 }

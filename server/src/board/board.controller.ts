@@ -1,21 +1,13 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardCreateDto } from './dto/board-create-dto';
-import { Request as ExpressRequest } from 'express';
 import { ColumnCreateDto } from 'src/column/dto/column-create.dto';
 import { ColumnService } from 'src/column/column.service';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateTaskDto } from 'src/task/dto/create-task.dto';
 import { TaskService } from 'src/task/task.service';
 import { MoveTaskDto } from 'src/task/dto/move-task.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { SignedUser, User } from 'src/auth/decorators/user/user.decorator';
 
 @Controller('board')
 export class BoardController {
@@ -24,14 +16,13 @@ export class BoardController {
     private readonly columnService: ColumnService,
     private readonly taskService: TaskService,
   ) {}
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post('/create')
   async createBoard(
     @Body() boardCreateDto: BoardCreateDto,
-    @Request() req: ExpressRequest,
+    @User() user: SignedUser,
   ) {
-    const userId = req.userObject?.id;
-    return await this.boardService.createBoard(boardCreateDto, userId);
+    return await this.boardService.createBoard(boardCreateDto, user.id);
   }
 
   @Post('/create/column')
@@ -45,20 +36,18 @@ export class BoardController {
   @Get('/:boardId')
   async getUserBoard(
     @Param('boardId') boardId: number,
-    @Request() req: ExpressRequest,
+    @User() user: SignedUser,
   ) {
-    const userId = req.userObject?.id;
-    return this.boardService.getUserBoard(boardId, userId);
+    return this.boardService.getUserBoard(boardId, user.id);
   }
 
   @Get('/:boardId/column/:columnId')
   async getUserBoardColumn(
     @Param('boardId') boardId: number,
     @Param('columnId') columnId: number,
-    @Request() req: ExpressRequest,
+    @User() user: SignedUser,
   ) {
-    const userId = req.userObject?.id;
-    this.boardService.getUserBoard(boardId, userId);
+    await this.boardService.getUserBoard(boardId, user.id);
     return await this.taskService.getTasksByColumnId(columnId);
   }
 
@@ -66,10 +55,9 @@ export class BoardController {
   async moveUserTask(
     @Param('boardId') boardId: number,
     @Body() moveTaskDto: MoveTaskDto,
-    @Request() req: ExpressRequest,
+    @User() user: SignedUser,
   ) {
-    const userId = req.userObject?.id;
-    this.boardService.getUserBoard(boardId, userId);
+    this.boardService.getUserBoard(boardId, user.id);
     return await this.taskService.moveTask(
       moveTaskDto.taskId,
       moveTaskDto.insertIndex,

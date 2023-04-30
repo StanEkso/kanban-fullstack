@@ -1,1 +1,1 @@
-web: npm run typeorm:run-migrations && npm run start:prod
+web: ts-node ./node_modules/typeorm/cli migration:run -- -d ./src/typeOrm.config.ts && npm run start:prod

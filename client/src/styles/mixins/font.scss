@@ -1,0 +1,22 @@
+@use '../variables/font';
+
+@function getValue($font-name, $conversion-map) {
+  @if not map-has-key($conversion-map, $font-name) {
+    @error "Invalid name `#{$font-name}`";
+    @return null;
+  }
+
+  @return map-get($conversion-map, $font-name);
+}
+
+@mixin baseText($font-name) {
+  font-size: getValue($font-name, font.$fontSizeText);
+  font-weight: getValue($font-name, font.$fontWeightText);
+  line-height: getValue($font-name, font.$lineHeightText);
+}
+
+@mixin baseTitle($font-name) {
+  font-size: getValue($font-name, font.$fontSizeTitle);
+  font-weight: getValue($font-name, font.$fontWeightTitle);
+  line-height: getValue($font-name, font.$lineHeightTitle);
+}

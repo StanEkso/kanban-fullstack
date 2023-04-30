@@ -1,0 +1,19 @@
+$min: (
+  'phone': 320px,
+  'tablet': 768px,
+  'xga': 1024px,
+  'wxga': 1366px,
+  'wxgaPlus': 1600px,
+  'fullhd': 1920px,
+  '2k': 2560px,
+) !default;
+
+$max: (
+  'phone': 319px,
+  'tablet': 767px,
+  'xga': 1023px,
+  'wxga': 1365px,
+  'wxgaPlus': 1599px,
+  'fullhd': 1919px,
+  '2k': 2559px,
+) !default;

@@ -1,5 +1,5 @@
 import { IsEmail, IsString, Length } from 'class-validator';
-import { Match } from 'src/decorators/match.decorator';
+import { Match } from '@/decorators/match.decorator';
 
 export class UserCreateDto {
   @IsEmail({}, { message: 'Email should be a valid email' })

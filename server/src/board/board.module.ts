@@ -3,10 +3,10 @@ import { BoardController } from './board.controller';
 import { BoardService } from './board.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Board } from './board.entity';
-import { UserModule } from 'src/user/user.module';
-import { ColumnEntity } from 'src/column/column.entity';
-import { ColumnModule } from 'src/column/column.module';
-import { TaskModule } from 'src/task/task.module';
+import { UserModule } from '@/user/user.module';
+import { ColumnEntity } from '@/column/column.entity';
+import { ColumnModule } from '@/column/column.module';
+import { TaskModule } from '@/task/task.module';
 
 @Module({
   controllers: [BoardController],

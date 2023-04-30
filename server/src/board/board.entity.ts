@@ -1,5 +1,5 @@
-import { ColumnEntity } from 'src/column/column.entity';
-import { User } from 'src/user/user.entity';
+import { ColumnEntity } from '@/column/column.entity';
+import { User } from '@/user/user.entity';
 import {
   Column,
   Entity,

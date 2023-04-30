@@ -1,4 +1,4 @@
-import { ColumnEntity } from 'src/column/column.entity';
+import { ColumnEntity } from '@/column/column.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'tasks' })

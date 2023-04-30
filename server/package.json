@@ -23,7 +23,9 @@
     "typeorm:run-migrations": "npm run typeorm migration:run -- -d ./src/typeOrm.config.ts",
     "typeorm:generate-migration": "npm run typeorm -- -d ./src/typeOrm.config.ts migration:generate ./src/migrations/$npm_config_name",
     "typeorm:create-migration": "npm run typeorm -- migration:create ./src/migrations/$npm_config_name",
-    "typeorm:revert-migration": "npm run typeorm -- -d ./src/typeOrm.config.ts migration:revert"
+    "typeorm:revert-migration": "npm run typeorm -- -d ./src/typeOrm.config.ts migration:revert",
+    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
+    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

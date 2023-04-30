@@ -21,3 +21,13 @@
     cursor: pointer;
   }
 }
+
+.success {
+  color: var(--color-white);
+  &-icon {
+    margin: 0 auto;
+  }
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -1,12 +1,13 @@
 import { SVGProps } from "react";
 
-export const Mail = (props: SVGProps<SVGElement>) => (
+export const Mail = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="24"
     height="24"
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <path
       d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"

@@ -30,7 +30,7 @@
 .modal {
   padding: 14px;
   border-radius: 16px;
-  background: #f7f7f7;
+  background: var(--color-gray);
 }
 
 @keyframes opening {

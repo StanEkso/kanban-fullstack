@@ -1,7 +1,9 @@
 import { Modal } from "@/store/slices/modal";
 import { FC } from "react";
-import Auth from "./components/Auth";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 
 export const modalComponents: Record<Modal, FC> = {
-  auth: Auth,
+  "sign-up": SignUp,
+  "sign-in": SignIn,
 };

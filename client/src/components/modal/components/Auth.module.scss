@@ -1,0 +1,23 @@
+@use "@/styles/mixins";
+
+.form {
+  display: grid;
+  gap: 8px;
+  &-title {
+    @include mixins.baseTitle("extrabold-18");
+    color: var(--color-white);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  &-text {
+    @include mixins.baseText("semibold-13");
+    color: var(--color-white);
+    text-align: center;
+  }
+
+  &-link {
+    color: var(--color-blue);
+    cursor: pointer;
+  }
+}

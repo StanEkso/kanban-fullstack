@@ -8,3 +8,5 @@ export * from "./File";
 export * from "./Arrow";
 export * from "./Chat";
 export * from "./NextArrow";
+export * from "./Password";
+export * from "./Mail";

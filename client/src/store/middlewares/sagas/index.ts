@@ -3,13 +3,9 @@ import * as helpers from "@/helpers";
 
 import { auth } from "./auth";
 import { http } from "@/api";
-function* hello() {
-  http.get("").then(console.log);
-}
-
 function* initializeClient() {
   if (helpers.common.isClientSide()) {
-    yield* effects.all([auth.initialize, hello].map(effects.call));
+    yield* effects.all([auth.initialize].map(effects.call));
   }
 }
 

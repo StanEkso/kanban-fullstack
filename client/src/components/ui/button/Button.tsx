@@ -3,10 +3,11 @@ import cx from "classnames";
 type Props = DetailedHTMLProps<
   HTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & {
-  theme?: "primary" | "secondary";
-  icon?: IconGlyph;
-};
+> &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    theme?: "primary" | "secondary";
+    icon?: IconGlyph;
+  };
 import styles from "./Button.module.scss";
 import { Icon, IconGlyph } from "../Icon";
 const Button: FC<Props> = ({

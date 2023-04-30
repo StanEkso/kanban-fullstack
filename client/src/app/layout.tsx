@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 
 import "./globals.css";
 import Providers from "./providers";
+import ModalRoot from "@/components/modal/ModalRoot";
 
 export const metadata = {
   title: "Kanban",
@@ -17,7 +18,10 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <ModalRoot />
+        </Providers>
       </body>
     </html>
   );

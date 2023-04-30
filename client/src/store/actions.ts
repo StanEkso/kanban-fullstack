@@ -1,1 +1,1 @@
-export { actions as profileActions } from "./slices/modal";
+export { actions as modal } from "./slices/modal";

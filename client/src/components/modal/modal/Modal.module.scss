@@ -1,0 +1,36 @@
+.base {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+
+  &__opening {
+    background: rgba(13, 18, 22, 0.75);
+    animation: opening 0.45s ease-in-out 1 normal forwards;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 12px;
+}
+
+.modal {
+  padding: 14px;
+  border-radius: 16px;
+  background: #f7f7f7;
+}
+
+@keyframes opening {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -7,7 +7,7 @@ import { Board } from './board.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardCreateDto } from './dto/board-create-dto';
-import { UserService } from '@/user/user.service';
+import { UserService } from '../user/user.service';
 import { BoardAccessType } from './access/access-type';
 
 @Injectable()

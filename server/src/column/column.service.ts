@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ColumnEntity } from './column.entity';
 import { Repository } from 'typeorm';
 import { ColumnCreateDto } from './dto/column-create.dto';
-import { BoardService } from '@/board/board.service';
-import { Board } from '@/board/board.entity';
+import { BoardService } from '../board/board.service';
+import { Board } from '../board/board.entity';
 
 @Injectable()
 export class ColumnService {

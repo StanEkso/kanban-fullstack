@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardCreateDto } from './dto/board-create-dto';
-import { ColumnCreateDto } from '@/column/dto/column-create.dto';
-import { ColumnService } from '@/column/column.service';
-import { CreateTaskDto } from '@/task/dto/create-task.dto';
-import { TaskService } from '@/task/task.service';
-import { MoveTaskDto } from '@/task/dto/move-task.dto';
-import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
-import { SignedUser, User } from '@/auth/decorators/user/user.decorator';
+import { ColumnCreateDto } from '../column/dto/column-create.dto';
+import { ColumnService } from '../column/column.service';
+import { CreateTaskDto } from '../task/dto/create-task.dto';
+import { TaskService } from '../task/task.service';
+import { MoveTaskDto } from '../task/dto/move-task.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { SignedUser, User } from '../auth/decorators/user/user.decorator';
 
 @Controller('board')
 export class BoardController {

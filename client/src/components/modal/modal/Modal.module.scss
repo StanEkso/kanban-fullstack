@@ -1,3 +1,5 @@
+@use "@/styles/mixins";
+
 .base {
   position: fixed;
   left: 0;
@@ -18,6 +20,11 @@
   display: flex;
   justify-content: center;
   padding-bottom: 12px;
+
+  @include mixins.breakpoint-min("tablet") {
+    align-items: center;
+    padding-bottom: 0;
+  }
 }
 
 .modal {

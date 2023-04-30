@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import ModalRoot from "@/components/modal/ModalRoot";
+import Header from "@/components/layout/Header";
+import colors from "@/styles/colors.module.scss";
 
 export const metadata = {
   title: "Kanban",
@@ -17,8 +19,9 @@ const inter = Inter({
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={colors}>
         <Providers>
+          <Header />
           {children}
           <ModalRoot />
         </Providers>

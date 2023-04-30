@@ -1,0 +1,32 @@
+@use "@/styles/mixins";
+
+.header {
+  color: var(--color-white);
+  $xSpacing: 12px;
+  $ySpacing: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include mixins.breakpoint-min("tablet") {
+    $xSpacing: 24px;
+    $ySpacing: 16px;
+  }
+  @include mixins.baseTitle("extrabold-18");
+  padding: $ySpacing $xSpacing;
+
+  position: relative;
+  &::after {
+    background: linear-gradient(
+      rgba(255, 255, 255, 0.13) 0px,
+      rgba(255, 255, 255, 0.13) 1px,
+      rgba(255, 255, 255, 0.08) 1px,
+      rgba(255, 255, 255, 0) 4px
+    );
+    height: var(--ds-space-050, 4px);
+    position: absolute;
+    top: 100%;
+    right: 0px;
+    left: 0px;
+    content: "";
+  }
+}

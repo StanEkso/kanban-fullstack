@@ -1,0 +1,49 @@
+/* Base text */
+$fontSizeText: (
+  medium-11: 11px,
+  medium-13: 13px,
+  medium-15: 15px,
+  semibold-13: 13px,
+  semibold-15: 15px,
+) !default;
+
+$fontWeightText: (
+  medium-11: 500,
+  medium-13: 500,
+  medium-15: 500,
+  semibold-13: 600,
+  semibold-15: 600,
+) !default;
+
+$lineHeightText: (
+  medium-11: 14px,
+  medium-13: 15px,
+  medium-15: 18px,
+  semibold-13: 15px,
+  semibold-15: 18px,
+) !default;
+
+/* Base title */
+$fontSizeTitle: (
+  bold-14: 14px,
+  bold-15: 15px,
+  extrabold-15: 15px,
+  extrabold-18: 18px,
+  extrabold-20: 20px,
+) !default;
+
+$fontWeightTitle: (
+  bold-14: 700,
+  bold-15: 700,
+  extrabold-15: 800,
+  extrabold-18: 800,
+  extrabold-20: 800,
+) !default;
+
+$lineHeightTitle: (
+  bold-14: 14px,
+  bold-15: 18px,
+  extrabold-15: 18px,
+  extrabold-18: 20px,
+  extrabold-20: 20px,
+) !default;

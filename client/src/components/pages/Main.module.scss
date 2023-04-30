@@ -1,0 +1,35 @@
+@use "@/styles/mixins";
+
+.screen {
+  &-full {
+    padding-top: 80px;
+    min-height: 100vh;
+  }
+}
+
+.page {
+  &-title {
+    text-align: center;
+    color: var(--color-white);
+    margin: 0 auto;
+    @include mixins.baseTitle("extrabold-32");
+    @include mixins.breakpoint-min("tablet") {
+      @include mixins.baseTitle("extrabold-40");
+    }
+  }
+  &-text {
+    text-align: center;
+    color: var(--color-white);
+    @include mixins.baseTitle("extrabold-15");
+  }
+  &-image {
+    max-width: 560px;
+  }
+
+  &__wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    @include mixins.flexbox($direction: column);
+    gap: 24px;
+  }
+}

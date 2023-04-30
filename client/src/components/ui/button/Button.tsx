@@ -5,14 +5,25 @@ type Props = DetailedHTMLProps<
   HTMLButtonElement
 > & {
   theme?: "primary" | "secondary";
+  icon?: IconGlyph;
 };
 import styles from "./Button.module.scss";
-const Button: FC<Props> = ({ className, theme = "primary", ...props }) => {
+import { Icon, IconGlyph } from "../Icon";
+const Button: FC<Props> = ({
+  className,
+  theme = "primary",
+  icon,
+  children,
+  ...props
+}) => {
   return (
     <button
       className={cx(styles.base, className, styles[`themes_${theme}`])}
       {...props}
-    ></button>
+    >
+      {children}
+      {!!icon && <Icon glyph={icon} />}
+    </button>
   );
 };
 

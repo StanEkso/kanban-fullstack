@@ -5,4 +5,5 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
-CMD npm run start:prod
+
+CMD npm run typeorm:run-migrations;npm run start:prod

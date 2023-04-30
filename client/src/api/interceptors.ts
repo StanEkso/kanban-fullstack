@@ -9,7 +9,7 @@ const attachToken = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   const { headers } = config;
-  const accessToken = localStorage.getItem("AUTH_TOKEN_KEY");
+  const accessToken = localStorage.getItem(AUTH_TOKEN_KEY);
   return {
     ...config,
     headers: headers.set("Authorization", `Bearer ${accessToken}`),

@@ -5,12 +5,14 @@ import Modal from "../modal/Modal";
 import Button from "@/components/ui/button/Button";
 import cx from "classnames";
 import styles from "./Auth.module.scss";
-import { useAction } from "@/helpers/hooks";
+import { useAction, useSelector } from "@/helpers/hooks";
 import { actions } from "@/store";
 import { useForm } from "@/helpers/hooks/useForm";
 import { FormEvent } from "react";
+import { selectors } from "@/store/selectors";
 function Auth() {
   const open = useAction(actions.modal.open);
+  const account = useSelector(selectors.auth.account);
   const { listener, payload } = useForm<Record<string, string>>();
   const tryLogin = useAction(actions.auth.signin);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -21,6 +23,7 @@ function Auth() {
   return (
     <Modal>
       <form action="" className={cx(styles.form)} onSubmit={handleSubmit}>
+        {JSON.stringify(account, null, 4)}
         <h2 className={styles["form-title"]}>Sign in in Kanban</h2>
         <Input
           preIcon="User"

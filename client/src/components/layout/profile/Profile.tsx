@@ -1,13 +1,24 @@
 "use client";
+import { Icon } from "@/components/ui/Icon";
 import Button from "@/components/ui/button/Button";
-import { useAction } from "@/helpers/hooks";
+import { useAction, useSelector } from "@/helpers/hooks";
 import { actions } from "@/store";
+import { selectors } from "@/store/selectors";
 import React from "react";
-type Props = {};
 
-const Profile = (props: Props) => {
-  const isAuth = false;
+const Profile = () => {
+  const account = useSelector(selectors.auth.account);
   const open = useAction(actions.modal.open);
+  const logout = useAction(actions.auth.logout);
+  if (account) {
+    return (
+      <div className="flex flex-row gap-2 items-center">
+        <span>{account.username}</span>
+        <Icon glyph="Arrow" />
+        <Button onClick={() => logout()}>Logout</Button>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-row gap-3">
       <Button theme="secondary" onClick={() => open("sign-in")}>

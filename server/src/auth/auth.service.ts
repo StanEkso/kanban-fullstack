@@ -32,10 +32,10 @@ export class AuthService {
     if (!this.encryptService.isPasswordsEquals(password, candidate.password)) {
       throw new BadRequestException('No user with such data!');
     }
+    const payload = this.userService.prepareUser(candidate);
     return {
-      accessToken: await this.jwtService.signAsync(
-        this.userService.prepareUser(candidate),
-      ),
+      accessToken: await this.jwtService.signAsync(payload),
+      ...payload,
     };
   }
   async validateUser(username: string, password: string) {

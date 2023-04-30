@@ -2,14 +2,14 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { Account, AuthState } from "./types";
 import { makeActionCreator } from "@/helpers/redux";
-import { ISigninRequestData, ISignupData } from "@/types/auth";
+import { ISigninRequestData, ISignupRequestData } from "@/types/auth";
 
 export const initialState: AuthState = {
   account: null,
 };
 
 export const slice = createSlice({
-  name: "modal",
+  name: "auth",
   initialState,
   reducers: {
     login: (state, action: PayloadAction<Account>) => {
@@ -26,7 +26,7 @@ const createAction = makeActionCreator(slice);
 export const actions = {
   ...slice.actions,
   signin: createAction<ISigninRequestData>("signin"),
-  signup: createAction<ISignupData>("signup"),
+  signup: createAction<ISignupRequestData>("signup"),
 };
 
 export default slice.reducer;

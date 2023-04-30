@@ -10,9 +10,21 @@ export interface ISigninResponseData {
   accessToken: string;
 }
 
-export interface ISignupData {
+export interface ISignupRequestData {
   email: string;
   username: string;
   password: string;
   repeatPassword: string;
+}
+
+export interface ISignupResponseData {
+  id: number;
+  email: string;
+  username: string;
+}
+
+export interface IGetUserResponseData {
+  id: number;
+  email: string;
+  username: string;
 }

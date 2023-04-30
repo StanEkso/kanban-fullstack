@@ -3,7 +3,7 @@ import * as helpers from "@/helpers";
 
 import * as actions from "./actions";
 import { reducers } from "./slices";
-import middlewares from "./middlewares";
+import middlewares, { runSagas } from "./middlewares";
 
 export { actions };
 
@@ -12,6 +12,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: middlewares,
 });
+runSagas();
 
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

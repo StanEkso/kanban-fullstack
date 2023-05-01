@@ -59,21 +59,25 @@ export class TaskService {
     if (!taskCandidate) {
       throw new BadRequestException('No such task!');
     }
-    const { column } = taskCandidate;
-    await this.moveAllTasks(column.id, insertIndex);
-    await this.taskRepository.update({ id: taskId }, { order: insertIndex });
-    return this.toDto(taskCandidate);
+    await this.moveAllTasks(taskCandidate, insertIndex);
+    const updatedTask = await this.taskRepository.findOne({
+      where: { id: taskCandidate.id },
+    });
+    return this.toDto(updatedTask);
   }
 
-  private async moveAllTasks(columnId: number, insertIndex: number) {
-    const tasks = (await this.getTasksByColumnId(columnId)).filter(
-      ({ order }) => order >= insertIndex,
+  private async moveAllTasks(task: Task, insertIndex: number) {
+    const tasks = await this.getTasksByColumnId(task.column.id);
+
+    const updatedTasks = [...tasks].filter(({ id }) => id !== task.id);
+    const resultInsertIndex = Math.min(
+      (await this.getLastOrder(task.column.id)) + 1,
+      insertIndex,
     );
-    for (const task of tasks) {
-      await this.taskRepository.update(
-        { id: task.id },
-        { order: task.order + 1 },
-      );
+    updatedTasks.splice(resultInsertIndex, 0, task);
+    for (let i = 0; i < updatedTasks.length; i++) {
+      const { id } = updatedTasks[i];
+      await this.taskRepository.update({ id }, { order: i + 1 });
     }
   }
 

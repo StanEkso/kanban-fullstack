@@ -5,11 +5,11 @@ import Link from "next/link";
 
 const BoardCard: FC<Board> = ({ title, id }) => {
   return (
-    <div className={styles.wrapper}>
-      <h3>
-        <Link href={`/dashboard/boards/${id}`}>{title}</Link>
-      </h3>
-    </div>
+    <Link href={`/dashboard/boards/${id}`}>
+      <div className={styles.wrapper}>
+        <h3>{title}</h3>
+      </div>
+    </Link>
   );
 };
 

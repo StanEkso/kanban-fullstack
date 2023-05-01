@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Tabs, { Tab } from "../tabs/Tabs";
-
+import styles from "./SideBar.module.scss";
 const tabs: Tab[] = [
   {
     title: "Profile",
@@ -12,7 +12,7 @@ const tabs: Tab[] = [
 
 const SideBar = () => {
   return (
-    <div className="">
+    <div className={styles.sidebar__wrapper}>
       <Tabs tabs={tabs} />
     </div>
   );

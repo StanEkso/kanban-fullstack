@@ -2,10 +2,11 @@ import { Middleware } from "@reduxjs/toolkit";
 import * as helpers from "@/helpers";
 import createSagaMiddleware from "redux-saga";
 import initializeSagas from "./sagas";
+import { api } from "../api";
 const sagaMiddleWare = createSagaMiddleware();
 
 const middlewares: Middleware[] = helpers.common.isClientSide()
-  ? [sagaMiddleWare]
+  ? [sagaMiddleWare, api.boards.middleware]
   : [];
 
 export const runSagas = () => {

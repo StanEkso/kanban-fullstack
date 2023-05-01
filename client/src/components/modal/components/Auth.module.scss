@@ -3,6 +3,8 @@
 .form {
   display: grid;
   gap: 8px;
+  color: var(--color-white);
+
   &-title {
     @include mixins.baseTitle("extrabold-18");
     color: var(--color-white);

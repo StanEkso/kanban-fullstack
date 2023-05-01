@@ -15,3 +15,9 @@ export enum BoardAccessType {
   FULL = "FULL",
   FORBIDDEN = "FORBIDDEN",
 }
+
+export interface ICreateBoardRequest {
+  title: string;
+  description?: string;
+  isPublic?: boolean;
+}

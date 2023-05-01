@@ -1,5 +1,5 @@
 import { axiosBaseQuery } from "@/api";
-import { Board, BoardWithDetails } from "@/types/board";
+import { Board, BoardWithDetails, ICreateBoardRequest } from "@/types/board";
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 
 export const api = createApi({
@@ -21,7 +21,15 @@ export const api = createApi({
       query: (id) => ({ url: `/board/${id}`, method: "GET" }),
       providesTags: (res) => [{ type: "BoardDetails", id: res?.id }],
     }),
+    createBoard: build.mutation<Board, ICreateBoardRequest>({
+      query: (data) => ({ url: "/board/create/", method: "POST", data }),
+      invalidatesTags: [{ type: "Board", id: "LIST" }],
+    }),
   }),
 });
 
-export const { useGetUserBoardsQuery, useGetBoardQuery } = api;
+export const {
+  useGetUserBoardsQuery,
+  useGetBoardQuery,
+  useCreateBoardMutation,
+} = api;

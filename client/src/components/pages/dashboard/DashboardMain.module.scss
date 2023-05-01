@@ -30,7 +30,23 @@
 
     &-grid {
       display: grid;
-      gap: 16px 8px;
+      gap: 8px 4px;
+      $columns: 1;
+      @include mixins.breakpoint-min("tablet") {
+        $columns: 2;
+      }
+      @include mixins.breakpoint-min("xga") {
+        $columns: 3;
+      }
+      @include mixins.breakpoint-min("wxga") {
+        $columns: 4;
+      }
+
+      @include mixins.breakpoint-min("wxgaPlus") {
+        $columns: 5;
+      }
+
+      grid-template-columns: repeat($columns, 1fr);
     }
   }
 }

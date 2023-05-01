@@ -1,0 +1,14 @@
+{
+  "name": "coursework",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "",
+  "scripts": {
+    "install": "cd client && npm install && cd ../server && npm install",
+    "start:fe:dev": "cd client && npm run dev",
+    "start:be:dev": "cd client && npm run start:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { UserCreateDto } from './dto/user-create-dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -40,7 +41,7 @@ export class UserService {
     return await this.userRepository.findOneBy({ id });
   }
 
-  public prepareUser(user: User) {
+  public prepareUser(user: User): UserDto {
     return {
       id: user.id,
       email: user.email,

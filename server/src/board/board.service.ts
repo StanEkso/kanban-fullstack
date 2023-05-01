@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BoardCreateDto } from './dto/board-create-dto';
 import { UserService } from 'src/user/user.service';
 import { BoardAccessType } from './access/access-type';
+import { BoardDto } from './dto/board.dto';
 
 @Injectable()
 export class BoardService {
@@ -26,7 +27,8 @@ export class BoardService {
     const board = this.boardRepository.create(boardCreateDto);
     board.owner = userCandidate;
     board.members = [userCandidate];
-    return this.boardRepository.save(board);
+    const createdBoard = await this.boardRepository.save(board);
+    return this.toDto(createdBoard);
   }
 
   async getUserBoards(userId: number) {
@@ -100,5 +102,9 @@ export class BoardService {
       return BoardAccessType.VIEW_ONLY;
     }
     return BoardAccessType.FORBIDDEN;
+  }
+
+  public toDto({ id, title, description, isPublic, owner }: Board): BoardDto {
+    return { id, title, description, isPublic, owner };
   }
 }

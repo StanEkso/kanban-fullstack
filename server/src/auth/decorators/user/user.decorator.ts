@@ -6,7 +6,6 @@ export const User = createParamDecorator(
     return request.user as SignedUser;
   },
 );
-
 export interface SignedUser {
   id: number;
   username: string;

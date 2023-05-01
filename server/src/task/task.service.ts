@@ -4,6 +4,7 @@ import { Task } from './task.entity';
 import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { ColumnService } from 'src/column/column.service';
+import { TaskDto } from './dto/task.dto';
 
 @Injectable()
 export class TaskService {
@@ -29,7 +30,7 @@ export class TaskService {
     if (!columnCandidate) {
       throw new BadRequestException('No such column!');
     }
-    return await this.taskRepository.find({
+    const tasks = await this.taskRepository.find({
       where: {
         column: { id: columnId },
       },
@@ -37,6 +38,7 @@ export class TaskService {
         order: 'ASC',
       },
     });
+    return tasks.map(this.toDto);
   }
 
   private async getLastOrder(columnId: number): Promise<number> {
@@ -47,10 +49,7 @@ export class TaskService {
     );
   }
 
-  async moveTask(
-    taskId: number,
-    insertIndex: number,
-  ): Promise<Omit<Task, 'column'>> {
+  async moveTask(taskId: number, insertIndex: number): Promise<TaskDto> {
     const taskCandidate = await this.taskRepository.findOne({
       where: { id: taskId },
       relations: {
@@ -60,13 +59,10 @@ export class TaskService {
     if (!taskCandidate) {
       throw new BadRequestException('No such task!');
     }
-    const { column, ...task } = taskCandidate;
+    const { column } = taskCandidate;
     await this.moveAllTasks(column.id, insertIndex);
     await this.taskRepository.update({ id: taskId }, { order: insertIndex });
-    return {
-      ...task,
-      order: insertIndex,
-    };
+    return this.toDto(taskCandidate);
   }
 
   private async moveAllTasks(columnId: number, insertIndex: number) {
@@ -79,5 +75,14 @@ export class TaskService {
         { order: task.order + 1 },
       );
     }
+  }
+
+  public toDto(task: Task): TaskDto {
+    return {
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      order: task.order,
+    };
   }
 }

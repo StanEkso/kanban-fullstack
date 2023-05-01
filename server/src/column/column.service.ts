@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { ColumnCreateDto } from './dto/column-create.dto';
 import { BoardService } from 'src/board/board.service';
 import { Board } from 'src/board/board.entity';
+import { ColumnDto } from './dto/column.dto';
 
 @Injectable()
 export class ColumnService {
@@ -26,14 +27,14 @@ export class ColumnService {
     const column = this.columnRepository.create(columnCreateDto);
     column.board = boardCandidate;
     const savedColumn = await this.columnRepository.save(column);
-    return savedColumn;
+    return this.toDto(savedColumn);
   }
 
   async getColumnById(columnId: number) {
     return await this.columnRepository.findOneBy({ id: columnId });
   }
 
-  public toDto({ id, title, board }: ColumnEntity) {
-    return { id, title, board: this.boardService.toDto(board) };
+  public toDto({ id, title }: ColumnEntity): ColumnDto {
+    return { id, title };
   }
 }

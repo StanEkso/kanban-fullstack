@@ -8,9 +8,16 @@ import { TaskService } from 'src/task/task.service';
 import { MoveTaskDto } from 'src/task/dto/move-task.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { SignedUser, User } from 'src/auth/decorators/user/user.decorator';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { BoardDto } from './dto/board.dto';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { BoardDto, BoardExtendedDto } from './dto/board.dto';
 import { ColumnDto } from 'src/column/dto/column.dto';
+import { TaskDto } from 'src/task/dto/task.dto';
 @ApiTags('Board')
 @Controller('board')
 @ApiBearerAuth()
@@ -43,11 +50,22 @@ export class BoardController {
   }
   @UseGuards(JwtAuthGuard)
   @Post('/create/task')
+  @ApiCreatedResponse({
+    type: TaskDto,
+    description: 'Successfully created a task',
+  })
   async createColumnTask(@Body() createTaskDto: CreateTaskDto) {
     return await this.taskService.createTask(createTaskDto);
   }
   @UseGuards(JwtAuthGuard)
   @Get('/:boardId')
+  @ApiOkResponse({
+    type: BoardExtendedDto,
+    description: 'Succesfully response',
+  })
+  @ApiForbiddenResponse({
+    description: "You haven't got access",
+  })
   async getUserBoard(
     @Param('boardId') boardId: number,
     @User() user: SignedUser,
@@ -57,6 +75,10 @@ export class BoardController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/:boardId/column/:columnId')
+  @ApiOkResponse({
+    type: [TaskDto],
+    description: 'Succesfully response',
+  })
   async getUserBoardColumn(
     @Param('boardId') boardId: number,
     @Param('columnId') columnId: number,
@@ -68,6 +90,10 @@ export class BoardController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/:boardId/task/move')
+  @ApiOkResponse({
+    type: TaskDto,
+    description: 'Succesfully response',
+  })
   async moveUserTask(
     @Param('boardId') boardId: number,
     @Body() moveTaskDto: MoveTaskDto,

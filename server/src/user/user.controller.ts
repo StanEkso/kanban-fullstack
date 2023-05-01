@@ -10,8 +10,10 @@ import {
 } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
 import { BoardService } from 'src/board/board.service';
+import { BoardDto } from 'src/board/dto/board.dto';
 @ApiTags('User')
 @Controller('user')
+@ApiBearerAuth()
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -19,7 +21,6 @@ export class UserController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOkResponse({
     type: UserDto,
     description: 'The current user (extracted from token)',
@@ -35,6 +36,13 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me/boards')
+  @ApiOkResponse({
+    type: [BoardDto],
+    description: 'The current user (extracted from token) boards',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'The token is invalid or never exists',
+  })
   async getUserBoards(@User() user: SignedUser) {
     return this.boardService.getUserBoards(user.id);
   }

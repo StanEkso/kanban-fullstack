@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Board } from 'src/board/board.entity';
-import { BoardDto } from 'src/board/dto/board.dto';
+import { TaskDto } from 'src/task/dto/task.dto';
 
 export class ColumnDto {
   @ApiProperty({ type: Number })
   id: number;
   @ApiProperty({ type: String })
   title: string;
-  @ApiProperty({ type: () => BoardDto })
-  board: Board;
+}
+
+export class ColumnExtendedDto extends ColumnDto {
+  @ApiProperty({ type: () => [TaskDto] })
+  tasks: TaskDto[];
 }

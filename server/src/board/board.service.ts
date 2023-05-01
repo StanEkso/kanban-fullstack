@@ -25,6 +25,7 @@ export class BoardService {
     }
     const board = this.boardRepository.create(boardCreateDto);
     board.owner = userCandidate;
+    board.members = [userCandidate];
     return this.boardRepository.save(board);
   }
 
@@ -68,6 +69,22 @@ export class BoardService {
       ...candidate,
       accessType,
     };
+  }
+
+  async addUserToBoard(boardId: number, userId: number, ownerId: number) {
+    const boardCandidate = await this.getUserBoard(boardId, ownerId);
+    if (boardCandidate.accessType !== BoardAccessType.FULL) {
+      throw new ForbiddenException(
+        "You can't invite other people to this board",
+      );
+    }
+    const userCandidate = await this.userService.getUserById(userId);
+    if (!userCandidate) {
+      throw new BadRequestException('No user with such data!');
+    }
+    boardCandidate.members.push(userCandidate);
+    const savedBoard = await this.boardRepository.save(boardCandidate);
+    return savedBoard;
   }
 
   private getAccessType(board: Board, userId: number): BoardAccessType {

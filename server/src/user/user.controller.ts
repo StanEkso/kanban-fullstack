@@ -9,10 +9,14 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
+import { BoardService } from 'src/board/board.service';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly boardService: BoardService,
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
@@ -27,5 +31,11 @@ export class UserController {
   async getUser(@User() user: SignedUser): Promise<UserDto> {
     const obj = await this.userService.getUserById(user.id);
     return this.userService.prepareUser(obj);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('me/boards')
+  async getUserBoards(@User() user: SignedUser) {
+    return this.boardService.getUserBoards(user.id);
   }
 }

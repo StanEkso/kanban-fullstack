@@ -1,5 +1,6 @@
 export interface AuthState {
   account: Account | null;
+  isLoading: boolean;
 }
 
 export interface Account {

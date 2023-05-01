@@ -26,6 +26,7 @@ export class BoardService {
     }
     const board = this.boardRepository.create(boardCreateDto);
     board.owner = userCandidate;
+    board.members = [userCandidate];
     const createdBoard = await this.boardRepository.save(board);
     return this.toDto(createdBoard);
   }
@@ -56,6 +57,7 @@ export class BoardService {
       relations: {
         columns: true,
         owner: true,
+        members: true,
       },
     });
     if (!candidate) {
@@ -71,13 +73,29 @@ export class BoardService {
     };
   }
 
+  async addUserToBoard(boardId: number, userId: number, ownerId: number) {
+    const boardCandidate = await this.getUserBoard(boardId, ownerId);
+    if (boardCandidate.accessType !== BoardAccessType.FULL) {
+      throw new ForbiddenException(
+        "You can't invite other people to this board",
+      );
+    }
+    const userCandidate = await this.userService.getUserById(userId);
+    if (!userCandidate) {
+      throw new BadRequestException('No user with such data!');
+    }
+    boardCandidate.members.push(userCandidate);
+    const savedBoard = await this.boardRepository.save(boardCandidate);
+    return savedBoard;
+  }
+
   private getAccessType(board: Board, userId: number): BoardAccessType {
     const { owner, ...rest } = board;
     if (owner.id === userId) {
       return BoardAccessType.FULL;
     }
-    // TODO: Logic for members of board
-    if (false /* board.members */) {
+
+    if (board.members.some(({ id }) => id === userId)) {
       return BoardAccessType.EDIT;
     }
     if (rest.isPublic) {

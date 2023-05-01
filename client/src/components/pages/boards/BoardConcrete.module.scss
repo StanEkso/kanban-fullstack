@@ -1,0 +1,20 @@
+@use "@/styles/mixins";
+
+.board__wrapper {
+  display: flex;
+  flex-direction: column;
+  color: var(--color-white);
+  &-header {
+    backdrop-filter: blur(4px);
+    background: #0000003d;
+    padding: 16px 12px;
+
+    &-title {
+      @include mixins.baseTitle("extrabold-18");
+    }
+  }
+
+  &-content {
+    flex: 1 1 0%;
+  }
+}

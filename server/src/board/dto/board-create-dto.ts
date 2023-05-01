@@ -7,7 +7,7 @@ export class BoardCreateDto {
   readonly title: string;
   @ApiProperty({ type: String })
   @IsOptional()
-  @IsString({ message: 'Title should be string' })
+  @IsString({ message: 'Description should be string' })
   readonly description: string;
   @ApiProperty({ type: Boolean })
   @IsOptional()

@@ -46,6 +46,7 @@ export class BoardController {
   async createColumnTask(@Body() createTaskDto: CreateTaskDto) {
     return await this.taskService.createTask(createTaskDto);
   }
+  @UseGuards(JwtAuthGuard)
   @Get('/:boardId')
   async getUserBoard(
     @Param('boardId') boardId: number,
@@ -54,6 +55,7 @@ export class BoardController {
     return this.boardService.getUserBoard(boardId, user.id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:boardId/column/:columnId')
   async getUserBoardColumn(
     @Param('boardId') boardId: number,

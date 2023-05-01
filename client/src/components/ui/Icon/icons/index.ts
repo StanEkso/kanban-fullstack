@@ -11,3 +11,4 @@ export * from "./NextArrow";
 export * from "./Password";
 export * from "./Mail";
 export * from "./Success";
+export * from "./Error";

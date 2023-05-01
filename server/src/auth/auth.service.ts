@@ -29,7 +29,12 @@ export class AuthService {
     if (!candidate) {
       throw new BadRequestException('No user with such data!');
     }
-    if (!this.encryptService.isPasswordsEquals(password, candidate.password)) {
+    if (
+      !(await this.encryptService.isPasswordsEquals(
+        password,
+        candidate.password,
+      ))
+    ) {
       throw new BadRequestException('No user with such data!');
     }
     const payload = this.userService.prepareUser(candidate);
@@ -47,6 +52,6 @@ export class AuthService {
   }
 
   private async validatePassword(user: User, password: string) {
-    return this.encryptService.isPasswordsEquals(user.password, password);
+    return this.encryptService.isPasswordsEquals(password, user.password);
   }
 }

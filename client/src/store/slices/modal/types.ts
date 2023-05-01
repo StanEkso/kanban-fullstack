@@ -4,6 +4,7 @@ export const availableModals = {
   signUp: "sign-up",
   signIn: "sign-in",
   loginSuccess: "login-success",
+  createBoard: "create-board",
 } as const;
 
 export type Modal = ValueOf<typeof availableModals>;

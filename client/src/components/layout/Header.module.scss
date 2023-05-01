@@ -15,18 +15,5 @@
   padding: $ySpacing $xSpacing;
 
   position: relative;
-  &::after {
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.13) 0px,
-      rgba(255, 255, 255, 0.13) 1px,
-      rgba(255, 255, 255, 0.08) 1px,
-      rgba(255, 255, 255, 0) 4px
-    );
-    height: var(--ds-space-050, 4px);
-    position: absolute;
-    top: 100%;
-    right: 0px;
-    left: 0px;
-    content: "";
-  }
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }

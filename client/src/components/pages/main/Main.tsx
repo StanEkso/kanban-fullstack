@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Main.module.scss";
-import Button from "../ui/button/Button";
+import Button from "../../ui/button/Button";
 const Main = () => {
   return (
     <div className="mx-4 sm:mx-8">

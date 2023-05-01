@@ -20,11 +20,13 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className} style={colors}>
-        <Providers>
-          <Header />
-          {children}
-          <ModalRoot />
-        </Providers>
+        <main className="root__wrapper">
+          <Providers>
+            <Header />
+            {children}
+            <ModalRoot />
+          </Providers>
+        </main>
       </body>
     </html>
   );

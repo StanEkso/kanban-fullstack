@@ -4,4 +4,26 @@
 
 body {
   background: #252939;
+  min-height: 100vh;
+}
+
+html {
+  height: 100%;
+}
+
+.root__wrapper {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.dashboard-wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+.dashboard-wrapper .content {
+  flex: 1;
 }

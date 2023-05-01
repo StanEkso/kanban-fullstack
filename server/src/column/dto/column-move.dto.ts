@@ -1,13 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
-export class MoveTaskDto {
+export class MoveColumnDto {
   @ApiProperty({ type: String })
-  @IsNumber({}, { message: 'Task id should be number' })
-  readonly taskId: number;
+  @IsNumber({}, { message: 'Board id should be number' })
+  readonly boardId: number;
 
   @ApiProperty({ type: Number })
-  @IsPositive()
   @IsNumber({}, { message: 'Insert index should be number' })
   readonly insertIndex: number;
 }

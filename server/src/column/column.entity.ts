@@ -21,4 +21,7 @@ export class ColumnEntity {
 
   @OneToMany(() => Task, (t) => t.column)
   tasks: Task[];
+
+  @Column({ nullable: false, default: 0 })
+  order: number;
 }

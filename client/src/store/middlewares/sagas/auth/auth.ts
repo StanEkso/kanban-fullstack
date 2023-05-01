@@ -8,11 +8,14 @@ import {
   ISignupRequestData,
   ISignupResponseData,
 } from "@/types/auth";
+import { ApiErrorWithDetails } from "@/types/error";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 import * as effects from "typed-redux-saga";
 
 function* handleLogin(action: PayloadAction<ISigninRequestData>) {
   yield effects.put(actions.auth.startLoad());
+  yield effects.put(actions.error.remove("sign-in"));
   try {
     const { data } = yield* effects.call(() =>
       http.post<ISigninResponseData>("/auth/signin", action.payload)
@@ -22,6 +25,14 @@ function* handleLogin(action: PayloadAction<ISigninRequestData>) {
     yield effects.put(actions.auth.login(rest));
     yield effects.put(actions.modal.open("login-success"));
   } catch (error) {
+    const { response } = error as AxiosError<ApiErrorWithDetails>;
+    if (!response) {
+      return;
+    }
+    const { data } = response;
+    yield effects.put(
+      actions.error.append({ kind: "sign-in", error: data.message.toString() })
+    );
   } finally {
     yield effects.put(actions.auth.endLoad());
   }
@@ -29,11 +40,20 @@ function* handleLogin(action: PayloadAction<ISigninRequestData>) {
 
 function* handleRegister(action: PayloadAction<ISignupRequestData>) {
   yield effects.put(actions.auth.startLoad());
+  yield effects.put(actions.error.remove("sign-up"));
   try {
     const { data } = yield* effects.call(() =>
       http.post<ISignupResponseData>("/auth/signup", action.payload)
     );
   } catch (error) {
+    const { response } = error as AxiosError<ApiErrorWithDetails>;
+    if (!response) {
+      return;
+    }
+    const { data } = response;
+    yield effects.put(
+      actions.error.append({ kind: "sign-up", error: data.message.toString() })
+    );
   } finally {
     yield effects.put(actions.auth.endLoad());
   }
@@ -58,10 +78,15 @@ function* getUser() {
   }
 }
 
+function* logout() {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+}
+
 export function* initialize() {
   yield getUser();
   yield* effects.all([
     effects.takeLatest(actions.auth.signin, handleLogin),
     effects.takeLatest(actions.auth.signup, handleRegister),
+    effects.takeLatest(actions.auth.logout, logout),
   ]);
 }

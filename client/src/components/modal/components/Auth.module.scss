@@ -20,6 +20,21 @@
     color: var(--color-blue);
     cursor: pointer;
   }
+
+  .error {
+    border-radius: 12px;
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 71, 87, 0.5);
+    color: rgba(255, 71, 87, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 270px;
+    &-text {
+      color: var(--color-white);
+      @include mixins.baseText("medium-11");
+    }
+  }
 }
 
 .success {

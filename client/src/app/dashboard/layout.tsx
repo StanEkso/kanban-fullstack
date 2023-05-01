@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import AuthProvider from "../AuthProvider";
 import SideBar from "@/components/ui/dashboard/SideBar";
 

@@ -14,6 +14,7 @@ async function bootstrap() {
     .setDescription('The Kanban API description')
     .addTag('Kanban')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);

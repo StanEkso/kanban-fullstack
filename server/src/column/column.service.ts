@@ -25,10 +25,15 @@ export class ColumnService {
       );
     const column = this.columnRepository.create(columnCreateDto);
     column.board = boardCandidate;
-    return this.columnRepository.save(column);
+    const savedColumn = await this.columnRepository.save(column);
+    return savedColumn;
   }
 
   async getColumnById(columnId: number) {
     return await this.columnRepository.findOneBy({ id: columnId });
+  }
+
+  public toDto({ id, title, board }: ColumnEntity) {
+    return { id, title, board: this.boardService.toDto(board) };
   }
 }

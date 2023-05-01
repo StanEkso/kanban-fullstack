@@ -9,7 +9,7 @@ export class BoardCreateDto {
   @IsOptional()
   @IsString({ message: 'Title should be string' })
   readonly description: string;
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: Boolean })
   @IsOptional()
   @IsBoolean({ message: 'Visibility should be a string' })
   readonly isPublic: boolean;

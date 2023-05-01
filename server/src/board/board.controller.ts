@@ -8,8 +8,12 @@ import { TaskService } from 'src/task/task.service';
 import { MoveTaskDto } from 'src/task/dto/move-task.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { SignedUser, User } from 'src/auth/decorators/user/user.decorator';
-
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { BoardDto } from './dto/board.dto';
+import { ColumnDto } from 'src/column/dto/column.dto';
+@ApiTags('Board')
 @Controller('board')
+@ApiBearerAuth()
 export class BoardController {
   constructor(
     private readonly boardService: BoardService,
@@ -18,17 +22,26 @@ export class BoardController {
   ) {}
   @UseGuards(JwtAuthGuard)
   @Post('/create')
+  @ApiCreatedResponse({
+    type: BoardDto,
+    description: 'Successfully created a board',
+  })
   async createBoard(
     @Body() boardCreateDto: BoardCreateDto,
     @User() user: SignedUser,
   ) {
     return await this.boardService.createBoard(boardCreateDto, user.id);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Post('/create/column')
+  @ApiCreatedResponse({
+    type: ColumnDto,
+    description: 'Successfully created a column',
+  })
   async createBoardColumn(@Body() createColumnDto: ColumnCreateDto) {
     return await this.columnService.createColumn(createColumnDto);
   }
+  @UseGuards(JwtAuthGuard)
   @Post('/create/task')
   async createColumnTask(@Body() createTaskDto: CreateTaskDto) {
     return await this.taskService.createTask(createTaskDto);
@@ -51,7 +64,8 @@ export class BoardController {
     return await this.taskService.getTasksByColumnId(columnId);
   }
 
-  @Post('/task/move')
+  @UseGuards(JwtAuthGuard)
+  @Post('/:boardId/task/move')
   async moveUserTask(
     @Param('boardId') boardId: number,
     @Body() moveTaskDto: MoveTaskDto,

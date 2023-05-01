@@ -6,6 +6,8 @@ export class ColumnDto {
   id: number;
   @ApiProperty({ type: String })
   title: string;
+  @ApiProperty({ type: Number })
+  order: number;
 }
 
 export class ColumnExtendedDto extends ColumnDto {

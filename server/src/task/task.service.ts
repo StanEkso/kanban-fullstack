@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { ColumnService } from 'src/column/column.service';
 import { TaskDto } from './dto/task.dto';
+import { computeIndex } from 'src/utils/indexes';
 
 @Injectable()
 export class TaskService {
@@ -70,9 +71,9 @@ export class TaskService {
     const tasks = await this.getTasksByColumnId(task.column.id);
 
     const updatedTasks = [...tasks].filter(({ id }) => id !== task.id);
-    const resultInsertIndex = Math.min(
-      (await this.getLastOrder(task.column.id)) + 1,
+    const resultInsertIndex = computeIndex(
       insertIndex,
+      (await this.getLastOrder(task.column.id)) + 1,
     );
     updatedTasks.splice(resultInsertIndex, 0, task);
     for (let i = 0; i < updatedTasks.length; i++) {

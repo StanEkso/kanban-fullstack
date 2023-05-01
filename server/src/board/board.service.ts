@@ -59,6 +59,11 @@ export class BoardService {
         owner: true,
         members: true,
       },
+      order: {
+        columns: {
+          order: 'ASC',
+        },
+      },
     });
     if (!candidate) {
       throw new BadRequestException('No such board');

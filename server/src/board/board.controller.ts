@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardCreateDto } from './dto/board-create-dto';
 import { ColumnCreateDto } from 'src/column/dto/column-create.dto';
@@ -18,6 +26,9 @@ import {
 import { BoardDto, BoardExtendedDto } from './dto/board.dto';
 import { ColumnDto } from 'src/column/dto/column.dto';
 import { TaskDto } from 'src/task/dto/task.dto';
+import { MoveColumnDto } from 'src/column/dto/column-move.dto';
+import { Public } from 'src/auth/decorators/public/isPublic.decorator';
+import { BoardAccessType } from './access/access-type';
 @ApiTags('Board')
 @Controller('board')
 @ApiBearerAuth()
@@ -57,6 +68,7 @@ export class BoardController {
   async createColumnTask(@Body() createTaskDto: CreateTaskDto) {
     return await this.taskService.createTask(createTaskDto);
   }
+  @Public()
   @UseGuards(JwtAuthGuard)
   @Get('/:boardId')
   @ApiOkResponse({
@@ -70,7 +82,7 @@ export class BoardController {
     @Param('boardId') boardId: number,
     @User() user: SignedUser,
   ) {
-    return this.boardService.getUserBoard(boardId, user.id);
+    return this.boardService.getUserBoard(boardId, user?.id);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -99,10 +111,34 @@ export class BoardController {
     @Body() moveTaskDto: MoveTaskDto,
     @User() user: SignedUser,
   ) {
-    this.boardService.getUserBoard(boardId, user.id);
+    const board = await this.boardService.getUserBoard(boardId, user.id);
+    if (board.accessType == BoardAccessType.VIEW_ONLY) {
+      throw new ForbiddenException("You can't edit this board");
+    }
     return await this.taskService.moveTask(
       moveTaskDto.taskId,
       moveTaskDto.insertIndex,
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/:boardId/column/move')
+  @ApiOkResponse({
+    type: TaskDto,
+    description: 'Succesfully response',
+  })
+  async moveColumn(
+    @Param('boardId') boardId: number,
+    @Body() moveColumnDto: MoveColumnDto,
+    @User() user: SignedUser,
+  ) {
+    const board = await this.boardService.getUserBoard(boardId, user.id);
+    if (board.accessType == BoardAccessType.VIEW_ONLY) {
+      throw new ForbiddenException("You can't edit this board");
+    }
+    return await this.columnService.moveColumn(
+      moveColumnDto.boardId,
+      moveColumnDto.insertIndex,
     );
   }
 }

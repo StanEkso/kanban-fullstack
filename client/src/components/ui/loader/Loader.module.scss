@@ -1,0 +1,19 @@
+@use "@/styles/mixins";
+
+.base {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background: rgba(13, 18, 22, 0.75);
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

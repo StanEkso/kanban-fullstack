@@ -6,6 +6,7 @@ import { ISigninRequestData, ISignupRequestData } from "@/types/auth";
 
 export const initialState: AuthState = {
   account: null,
+  isLoading: false,
 };
 
 export const slice = createSlice({
@@ -17,6 +18,12 @@ export const slice = createSlice({
     },
     logout: (state) => {
       state.account = null;
+    },
+    startLoad: (state) => {
+      state.isLoading = true;
+    },
+    endLoad: (state) => {
+      state.isLoading = false;
     },
   },
 });

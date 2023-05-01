@@ -1,0 +1,30 @@
+@use "@/styles/mixins";
+
+.wrapper {
+  $xSpacing: 12px;
+  $ySpacing: 16px;
+
+  margin: $ySpacing $xSpacing;
+
+  color: var(--color-white);
+
+  &-text {
+    @include mixins.baseTitle("extrabold-15");
+  }
+  &-image {
+    max-width: 560px;
+  }
+  &-title {
+    @include mixins.baseTitle("extrabold-20");
+  }
+
+  &__wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    @include mixins.flexbox($direction: column);
+    gap: 24px;
+  }
+  &-page-title {
+    @include mixins.baseTitle("extrabold-32");
+  }
+}

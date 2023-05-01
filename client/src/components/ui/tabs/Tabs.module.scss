@@ -1,0 +1,42 @@
+@use "@/styles/mixins";
+
+.container {
+  color: var(--color-white);
+  $xSpacing: 4px;
+  $ySpacing: 8px;
+  display: flex;
+  flex-direction: column;
+  @include mixins.breakpoint-min("tablet") {
+    $xSpacing: 12px;
+    $ySpacing: 16px;
+  }
+  @include mixins.baseTitle("extrabold-18");
+  padding: $ySpacing $xSpacing;
+
+  gap: 8px;
+
+  &__element {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  position: relative;
+  &::after {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.13) 0px,
+      rgba(255, 255, 255, 0.13) 1px,
+      rgba(255, 255, 255, 0.08) 1px,
+      rgba(255, 255, 255, 0) 4px
+    );
+    height: 100%;
+    width: 4px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% - 4px);
+    content: "";
+  }
+}

@@ -1,7 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import styles from "./SideBar.module.scss";
-import { IconGlyph } from "../Icon";
+import React from "react";
 import Tabs, { Tab } from "../tabs/Tabs";
 
 const tabs: Tab[] = [
@@ -13,7 +11,6 @@ const tabs: Tab[] = [
 ];
 
 const SideBar = () => {
-  const [opened, setOpened] = useState(false);
   return (
     <div className="">
       <Tabs tabs={tabs} />

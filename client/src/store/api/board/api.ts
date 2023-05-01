@@ -4,10 +4,10 @@ import { createApi } from "@reduxjs/toolkit/dist/query/react";
 
 export const api = createApi({
   reducerPath: "boardApi",
-  baseQuery: axiosBaseQuery({ baseUrl: "/board" }),
+  baseQuery: axiosBaseQuery({ baseUrl: "" }),
   endpoints: (build) => ({
     getUserBoards: build.query<Board[], void>({
-      query: () => ({ url: "", method: "get" }),
+      query: () => ({ url: "/user/me/boards", method: "get" }),
     }),
   }),
 });

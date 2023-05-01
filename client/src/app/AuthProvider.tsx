@@ -1,5 +1,6 @@
 "use client";
 import Loader from "@/components/ui/loader/Loader";
+import { common } from "@/helpers";
 import { useSelector } from "@/helpers/hooks";
 import { selectors } from "@/store/selectors";
 import { useRouter } from "next/navigation";
@@ -10,7 +11,7 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const loading = useSelector(selectors.auth.loading);
   const account = useSelector(selectors.auth.account);
   const router = useRouter();
-  if (loading) {
+  if (loading || common.isServerSide()) {
     return <Loader />;
   }
   if (!account) {

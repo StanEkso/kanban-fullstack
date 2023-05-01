@@ -17,14 +17,20 @@
   &-title {
     @include mixins.baseTitle("extrabold-20");
   }
-
-  &__wrapper {
-    max-width: 600px;
-    margin: 0 auto;
-    @include mixins.flexbox($direction: column);
-    gap: 24px;
-  }
+  @include mixins.flexbox($direction: column);
+  gap: 8px;
   &-page-title {
     @include mixins.baseTitle("extrabold-32");
+  }
+
+  &__board_container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-grid {
+      display: grid;
+      gap: 16px 8px;
+    }
   }
 }

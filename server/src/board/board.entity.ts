@@ -3,6 +3,8 @@ import { User } from 'src/user/user.entity';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -27,4 +29,8 @@ export class Board {
 
   @OneToMany(() => ColumnEntity, (c) => c.board)
   columns: ColumnEntity[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  members: User[];
 }

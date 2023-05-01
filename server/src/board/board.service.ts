@@ -54,6 +54,7 @@ export class BoardService {
       relations: {
         columns: true,
         owner: true,
+        members: true,
       },
     });
     if (!candidate) {
@@ -74,8 +75,8 @@ export class BoardService {
     if (owner.id === userId) {
       return BoardAccessType.FULL;
     }
-    // TODO: Logic for members of board
-    if (false /* board.members */) {
+
+    if (board.members.some(({ id }) => id === userId)) {
       return BoardAccessType.EDIT;
     }
     if (rest.isPublic) {

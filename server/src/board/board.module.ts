@@ -13,7 +13,7 @@ import { TaskModule } from 'src/task/task.module';
   providers: [BoardService],
   imports: [
     TypeOrmModule.forFeature([Board, ColumnEntity]),
-    UserModule,
+    forwardRef(() => UserModule),
     forwardRef(() => ColumnModule),
     TaskModule,
   ],

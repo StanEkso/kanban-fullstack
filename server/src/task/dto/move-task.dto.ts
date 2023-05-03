@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
 export class MoveTaskDto {
   @ApiProperty({ type: String })
@@ -7,7 +7,6 @@ export class MoveTaskDto {
   readonly taskId: number;
 
   @ApiProperty({ type: Number })
-  @IsPositive()
   @IsNumber({}, { message: 'Insert index should be number' })
   readonly insertIndex: number;
 }

@@ -5,7 +5,7 @@
   flex-direction: column;
   color: var(--color-white);
   flex: 1 1 0%;
-  overflow: hidden;
+  // overflow: hidden;
   &-header {
     backdrop-filter: blur(4px);
     background: #0000003d;
@@ -25,7 +25,8 @@
     padding-right: 0;
     display: flex;
     gap: 1rem;
-    overflow: scroll;
+    overflow-x: scroll;
+    max-width: 95vw;
     flex: 1 1 0%;
 
     &::-webkit-scrollbar {

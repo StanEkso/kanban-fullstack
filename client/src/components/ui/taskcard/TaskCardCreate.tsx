@@ -17,7 +17,7 @@ const TaskCardCreate: FC<Props> = ({ onSubmit, close }) => {
       return close();
     }
     onSubmit({ title: payload.title, columnId: 0 });
-    setPayload({});
+    setPayload(() => ({}));
   };
   return (
     <div className={styles["container"]}>

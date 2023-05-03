@@ -46,3 +46,8 @@ export interface IColumnCreateRequest {
   title: string;
   boardId: number;
 }
+
+export interface ITaskMoveRequest {
+  insertIndex: number;
+  taskId: number;
+}

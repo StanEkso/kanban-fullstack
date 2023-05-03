@@ -10,13 +10,14 @@ export interface Tab {
 
 interface Props {
   tabs: Tab[];
+  opened: boolean;
 }
 
-const Tabs: FC<Props> = ({ tabs }) => {
+const Tabs: FC<Props> = ({ tabs, opened }) => {
   return (
     <div className={styles.container}>
       {tabs.map((tab) => (
-        <Tab key={tab.icon} {...tab} />
+        <Tab key={tab.icon} {...tab} opened={opened} />
       ))}
     </div>
   );

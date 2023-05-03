@@ -21,7 +21,7 @@ html {
 
 .dashboard-wrapper {
   flex: 1;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .dashboard-wrapper .content {

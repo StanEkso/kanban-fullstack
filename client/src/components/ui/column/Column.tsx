@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC, useState } from "react";
-
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import styles from "./Column.module.scss";
 import { Column as IColumn } from "@/types/board";
 import {
@@ -20,9 +20,35 @@ const Column: FC<IColumn> = ({ title, id }) => {
     <div className="">
       <div className={styles.container}>
         <h1 className={styles["container-title"]}>{title}</h1>
-        {data?.map((v) => (
-          <TaskCard key={v.id} {...v} />
-        ))}
+        <DragDropContext onDragEnd={(res: any) => console.log(res)}>
+          <Droppable droppableId="cards">
+            {(provided) => (
+              <div
+                className={styles["container-inner"]}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {data?.map((v) => (
+                  <Draggable
+                    key={v.id}
+                    draggableId={v.id.toString()}
+                    index={v.order}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <TaskCard key={v.id} {...v} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
         {isCreating && (
           <TaskCardCreate
             onSubmit={(v) => {

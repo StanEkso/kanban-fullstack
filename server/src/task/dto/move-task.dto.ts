@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber } from 'class-validator';
+import { IsNumber, IsOptional } from 'class-validator';
 
 export class MoveTaskDto {
   @ApiProperty({ type: String })
@@ -9,4 +9,9 @@ export class MoveTaskDto {
   @ApiProperty({ type: Number })
   @IsNumber({}, { message: 'Insert index should be number' })
   readonly insertIndex: number;
+
+  @ApiProperty({ type: Number })
+  @IsOptional()
+  @IsNumber()
+  readonly newColumnId: number;
 }

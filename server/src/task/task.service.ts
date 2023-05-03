@@ -58,6 +58,7 @@ export class TaskService {
     taskId: number,
     insertIndex: number,
     userId: number,
+    newColumnId?: number,
   ): Promise<TaskDto> {
     const taskCandidate = await this.taskRepository.findOne({
       where: { id: taskId },
@@ -68,10 +69,16 @@ export class TaskService {
     if (!taskCandidate) {
       throw new BadRequestException('No such task!');
     }
-    const tasks = await this.getTasksByColumnId(
-      taskCandidate.column.id,
-      userId,
-    );
+    const columnId = newColumnId ?? taskCandidate.column.id;
+    if (columnId !== taskCandidate.column.id) {
+      await this.taskRepository.update(
+        { id: taskCandidate.id },
+        {
+          column: { id: columnId },
+        },
+      );
+    }
+    const tasks = await this.getTasksByColumnId(columnId, userId);
     await this.moveAllTasks(tasks, taskCandidate, insertIndex);
     const updatedTask = await this.taskRepository.findOne({
       where: { id: taskCandidate.id },

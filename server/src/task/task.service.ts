@@ -6,12 +6,14 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { ColumnService } from 'src/column/column.service';
 import { TaskDto } from './dto/task.dto';
 import { computeIndex } from 'src/utils/indexes';
+import { BoardService } from 'src/board/board.service';
 
 @Injectable()
 export class TaskService {
   constructor(
     @InjectRepository(Task) private readonly taskRepository: Repository<Task>,
     private readonly columnService: ColumnService,
+    private readonly boardService: BoardService,
   ) {}
 
   async createTask(createTaskDto: CreateTaskDto) {
@@ -26,11 +28,12 @@ export class TaskService {
     return await this.taskRepository.save(task);
   }
 
-  async getTasksByColumnId(columnId: number) {
+  async getTasksByColumnId(columnId: number, userId: number) {
     const columnCandidate = await this.columnService.getColumnById(columnId);
     if (!columnCandidate) {
       throw new BadRequestException('No such column!');
     }
+    await this.boardService.getUserBoard(columnCandidate.board.id, userId);
     const tasks = await this.taskRepository.find({
       where: {
         column: { id: columnId },
@@ -50,7 +53,11 @@ export class TaskService {
     );
   }
 
-  async moveTask(taskId: number, insertIndex: number): Promise<TaskDto> {
+  async moveTask(
+    taskId: number,
+    insertIndex: number,
+    userId: number,
+  ): Promise<TaskDto> {
     const taskCandidate = await this.taskRepository.findOne({
       where: { id: taskId },
       relations: {
@@ -60,16 +67,22 @@ export class TaskService {
     if (!taskCandidate) {
       throw new BadRequestException('No such task!');
     }
-    await this.moveAllTasks(taskCandidate, insertIndex);
+    const tasks = await this.getTasksByColumnId(
+      taskCandidate.column.id,
+      userId,
+    );
+    await this.moveAllTasks(tasks, taskCandidate, insertIndex);
     const updatedTask = await this.taskRepository.findOne({
       where: { id: taskCandidate.id },
     });
     return this.toDto(updatedTask);
   }
 
-  private async moveAllTasks(task: Task, insertIndex: number) {
-    const tasks = await this.getTasksByColumnId(task.column.id);
-
+  private async moveAllTasks(
+    tasks: TaskDto[],
+    task: Task,
+    insertIndex: number,
+  ) {
     const updatedTasks = [...tasks].filter(({ id }) => id !== task.id);
     const resultInsertIndex = computeIndex(
       insertIndex,

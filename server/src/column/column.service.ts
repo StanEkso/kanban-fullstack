@@ -32,8 +32,13 @@ export class ColumnService {
     return this.toDto(savedColumn);
   }
 
-  async getColumnById(columnId: number) {
-    return await this.columnRepository.findOneBy({ id: columnId });
+  async getColumnById(id: number) {
+    return await this.columnRepository.findOne({
+      where: { id },
+      relations: {
+        board: true,
+      },
+    });
   }
 
   async getColumnByBoardId(id: number) {
@@ -55,7 +60,11 @@ export class ColumnService {
     );
   }
 
-  async moveColumn(columnId: number, insertIndex: number): Promise<ColumnDto> {
+  async moveColumn(
+    columnId: number,
+    insertIndex: number,
+    userId: number,
+  ): Promise<ColumnDto> {
     const columnCandidate = await this.columnRepository.findOne({
       where: { id: columnId },
       relations: {
@@ -65,6 +74,7 @@ export class ColumnService {
     if (!columnCandidate) {
       throw new BadRequestException('No such task!');
     }
+    await this.boardService.getUserBoard(columnCandidate.board.id, userId);
     await this.moveAllColumns(columnCandidate, insertIndex);
     const updatedColumn = await this.columnRepository.findOne({
       where: { id: columnCandidate.id },

@@ -46,11 +46,12 @@ export class TaskService {
   }
 
   private async getLastOrder(columnId: number): Promise<number> {
-    return (
-      (await this.taskRepository.maximum('order', {
+    const tasks = await this.taskRepository.find({
+      where: {
         column: { id: columnId },
-      })) ?? 0
-    );
+      },
+    });
+    return Math.max(...tasks.map((t) => t.order), 0);
   }
 
   async moveTask(

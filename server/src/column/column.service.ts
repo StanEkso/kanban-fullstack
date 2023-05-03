@@ -53,11 +53,12 @@ export class ColumnService {
   }
 
   private async getLastOrder(boardId: number): Promise<number> {
-    return (
-      (await this.columnRepository.maximum('order', {
+    const tasks = await this.columnRepository.find({
+      where: {
         board: { id: boardId },
-      })) ?? 0
-    );
+      },
+    });
+    return Math.max(...tasks.map((t) => t.order), 0);
   }
 
   async moveColumn(

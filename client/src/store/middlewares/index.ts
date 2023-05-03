@@ -6,7 +6,7 @@ import { api } from "../api";
 const sagaMiddleWare = createSagaMiddleware();
 
 const middlewares: Middleware[] = helpers.common.isClientSide()
-  ? [sagaMiddleWare, api.boards.middleware]
+  ? [sagaMiddleWare, api.boards.middleware, api.column.middleware]
   : [];
 
 export const runSagas = () => {

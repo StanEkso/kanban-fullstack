@@ -22,6 +22,7 @@ const BoardConcrete: FC<BoardWithDetails> = ({ title, columns, id }) => {
     const data = extractData(res);
     moveTask(data);
   };
+
   return (
     <div className={styles.board__wrapper}>
       <div className={styles["board__wrapper-header"]}>
@@ -59,9 +60,9 @@ export default BoardConcrete;
 
 export const extractData = (res: DropResult) => {
   const taskId = Number(res.draggableId);
-  const innerColumnId = Number(res.source.droppableId.split("-")[0]);
+  const innerColumnId = Number(res.source.droppableId.split("-")[1]);
   const destinationColumnId = Number(
-    res.destination?.droppableId.split("-")[0]
+    res.destination?.droppableId.split("-")[1]
   );
   return {
     taskId: taskId,

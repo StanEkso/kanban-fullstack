@@ -7,7 +7,6 @@ import { Column as IColumn } from "@/types/board";
 import {
   useCreateTaskMutation,
   useGetColumnDetailsQuery,
-  useMoveTaskMutation,
 } from "@/store/api/task";
 import TaskCard from "../taskcard/TaskCard";
 import Button from "../button/Button";
@@ -17,7 +16,6 @@ const Column: FC<IColumn> = ({ title, id }) => {
   const { data } = useGetColumnDetailsQuery(id);
   const [isCreating, setIsCreating] = useState(false);
   const [createTask] = useCreateTaskMutation();
-  const [moveTask] = useMoveTaskMutation();
   return (
     <div className="">
       <div className={styles.container}>

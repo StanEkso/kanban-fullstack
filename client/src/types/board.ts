@@ -50,4 +50,5 @@ export interface IColumnCreateRequest {
 export interface ITaskMoveRequest {
   insertIndex: number;
   taskId: number;
+  newColumnId: number;
 }

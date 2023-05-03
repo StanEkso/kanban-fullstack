@@ -26,7 +26,7 @@ const Column: FC<IColumn> = ({ title, id }) => {
   const handleDragEnd: OnDragEndResponder = (result) => {
     moveTask({
       insertIndex: (result.destination?.index ?? 1) - 1,
-      taskId: id,
+      taskId: Number(result.draggableId),
     });
   };
   return (

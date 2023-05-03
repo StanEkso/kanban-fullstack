@@ -37,6 +37,7 @@ export const api = createApi({
         method: "POST",
         data,
       }),
+      invalidatesTags: [{ type: "ColumnDetails", id: "LIST" }],
     }),
   }),
 });

@@ -1,0 +1,15 @@
+@use "@/styles/mixins";
+
+.container {
+  background: var(--color-gray-500);
+  border-radius: 12px;
+  padding: 12px 8px;
+  @include mixins.baseText("semibold-15");
+
+  &-input {
+    border: none;
+    background: none;
+    outline: none;
+    font-size: inherit;
+  }
+}

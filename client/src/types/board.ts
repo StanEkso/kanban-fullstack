@@ -34,3 +34,9 @@ export interface Task {
   description: string;
   order: number;
 }
+
+export interface ITaskCreateRequest {
+  title: string;
+  description?: string;
+  columnId: number;
+}

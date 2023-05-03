@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  ForbiddenException,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { BoardCreateDto } from './dto/board-create-dto';
 import { ColumnCreateDto } from 'src/column/dto/column-create.dto';
@@ -28,7 +20,6 @@ import { ColumnDto } from 'src/column/dto/column.dto';
 import { TaskDto } from 'src/task/dto/task.dto';
 import { MoveColumnDto } from 'src/column/dto/column-move.dto';
 import { Public } from 'src/auth/decorators/public/isPublic.decorator';
-import { BoardAccessType } from './access/access-type';
 @ApiTags('Board')
 @Controller('board')
 @ApiBearerAuth()
@@ -85,19 +76,18 @@ export class BoardController {
     return this.boardService.getUserBoard(boardId, user?.id);
   }
 
+  @Public()
   @UseGuards(JwtAuthGuard)
-  @Get('/:boardId/column/:columnId')
+  @Get('/column/:columnId')
   @ApiOkResponse({
     type: [TaskDto],
     description: 'Succesfully response',
   })
   async getUserBoardColumn(
-    @Param('boardId') boardId: number,
     @Param('columnId') columnId: number,
     @User() user: SignedUser,
   ) {
-    await this.boardService.getUserBoard(boardId, user.id);
-    return await this.taskService.getTasksByColumnId(columnId);
+    return await this.taskService.getTasksByColumnId(columnId, user?.id);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -107,38 +97,30 @@ export class BoardController {
     description: 'Succesfully response',
   })
   async moveUserTask(
-    @Param('boardId') boardId: number,
     @Body() moveTaskDto: MoveTaskDto,
     @User() user: SignedUser,
   ) {
-    const board = await this.boardService.getUserBoard(boardId, user.id);
-    if (board.accessType == BoardAccessType.VIEW_ONLY) {
-      throw new ForbiddenException("You can't edit this board");
-    }
     return await this.taskService.moveTask(
       moveTaskDto.taskId,
       moveTaskDto.insertIndex,
+      user.id,
     );
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/:boardId/column/move')
+  @Post('/column/move')
   @ApiOkResponse({
     type: TaskDto,
     description: 'Succesfully response',
   })
   async moveColumn(
-    @Param('boardId') boardId: number,
     @Body() moveColumnDto: MoveColumnDto,
     @User() user: SignedUser,
   ) {
-    const board = await this.boardService.getUserBoard(boardId, user.id);
-    if (board.accessType == BoardAccessType.VIEW_ONLY) {
-      throw new ForbiddenException("You can't edit this board");
-    }
     return await this.columnService.moveColumn(
       moveColumnDto.boardId,
       moveColumnDto.insertIndex,
+      user.id,
     );
   }
 }

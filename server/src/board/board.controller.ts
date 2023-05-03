@@ -91,7 +91,7 @@ export class BoardController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('/:boardId/task/move')
+  @Post('/task/move')
   @ApiOkResponse({
     type: TaskDto,
     description: 'Succesfully response',

@@ -1,5 +1,5 @@
 import { axiosBaseQuery } from "@/api";
-import { ITaskCreateRequest, Task } from "@/types/board";
+import { ITaskCreateRequest, ITaskMoveRequest, Task } from "@/types/board";
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 
 export const api = createApi({
@@ -31,7 +31,18 @@ export const api = createApi({
       }),
       invalidatesTags: [{ type: "ColumnDetails", id: "LIST" }],
     }),
+    moveTask: build.mutation<Task, ITaskMoveRequest>({
+      query: (data) => ({
+        url: "/board/task/move",
+        method: "POST",
+        data,
+      }),
+    }),
   }),
 });
 
-export const { useGetColumnDetailsQuery, useCreateTaskMutation } = api;
+export const {
+  useGetColumnDetailsQuery,
+  useCreateTaskMutation,
+  useMoveTaskMutation,
+} = api;

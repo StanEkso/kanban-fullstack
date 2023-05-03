@@ -7,7 +7,7 @@ import { Column as IColumn } from "@/types/board";
 import {
   useCreateTaskMutation,
   useGetColumnDetailsQuery,
-} from "@/store/api/column";
+} from "@/store/api/task";
 import TaskCard from "../taskcard/TaskCard";
 import Button from "../button/Button";
 import TaskCardCreate from "../taskcard/TaskCardCreate";

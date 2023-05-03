@@ -10,13 +10,14 @@ type Props = {
 };
 
 const TaskCardCreate: FC<Props> = ({ onSubmit, close }) => {
-  const { payload, listener } = useForm<Record<string, string>>();
+  const { payload, listener, setPayload } = useForm<Record<string, string>>();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (payload.title?.trim() === "") {
+    if (!payload.title?.trim()) {
       return close();
     }
     onSubmit({ title: payload.title, columnId: 0 });
+    setPayload({});
   };
   return (
     <div className={styles["container"]}>
@@ -29,6 +30,7 @@ const TaskCardCreate: FC<Props> = ({ onSubmit, close }) => {
           onChange={listener}
           autoFocus={true}
           onBlur={close}
+          value={payload.title}
         />
       </form>
     </div>

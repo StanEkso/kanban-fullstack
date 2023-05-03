@@ -13,4 +13,11 @@
     @include mixins.baseTitle("extrabold-15");
     padding: 0 8px;
   }
+
+  &-input {
+    border: none;
+    background: none;
+    outline: none;
+    @include mixins.baseTitle("extrabold-15");
+  }
 }

@@ -26,6 +26,7 @@ export interface Column {
   id: number;
   title: string;
   order: number;
+  board?: Board;
 }
 
 export interface Task {
@@ -39,4 +40,9 @@ export interface ITaskCreateRequest {
   title: string;
   description?: string;
   columnId: number;
+}
+
+export interface IColumnCreateRequest {
+  title: string;
+  boardId: number;
 }

@@ -1,37 +1,26 @@
 import { axiosBaseQuery } from "@/api";
-import { ITaskCreateRequest, Task } from "@/types/board";
+import {
+  Column,
+  IColumnCreateRequest,
+  ITaskCreateRequest,
+  Task,
+} from "@/types/board";
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
 
 export const api = createApi({
-  reducerPath: "columnApi",
+  reducerPath: "taskApi",
   baseQuery: axiosBaseQuery({ baseUrl: "" }),
-  tagTypes: ["Column", "ColumnDetails"],
+  tagTypes: ["BoardDetails"],
   endpoints: (build) => ({
-    getColumnDetails: build.query<Task[], number>({
-      query: (columnId) => ({
-        url: `board/column/${columnId}`,
-        method: "GET",
-      }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({
-                type: "ColumnDetails" as const,
-                id,
-              })),
-              { type: "ColumnDetails", id: "LIST" },
-            ]
-          : [{ type: "ColumnDetails", id: "LIST" }],
-    }),
-    createTask: build.mutation<Task, ITaskCreateRequest>({
+    createColumn: build.mutation<Column, IColumnCreateRequest>({
       query: (createDto) => ({
-        url: `/board/create/task`,
+        url: `/board/create/column`,
         method: "POST",
         data: createDto,
       }),
-      invalidatesTags: [{ type: "ColumnDetails", id: "LIST" }],
+      invalidatesTags: (res) => [{ type: "BoardDetails", id: res?.board?.id }],
     }),
   }),
 });
 
-export const { useGetColumnDetailsQuery, useCreateTaskMutation } = api;
+export const { useCreateColumnMutation } = api;

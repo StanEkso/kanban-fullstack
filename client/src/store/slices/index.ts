@@ -9,4 +9,6 @@ export const reducers = combineReducers({
   auth,
   error,
   [api.boards.reducerPath]: api.boards.reducer,
+  [api.column.reducerPath]: api.column.reducer,
+  [api.tasks.reducerPath]: api.tasks.reducer,
 });

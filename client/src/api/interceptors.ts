@@ -9,7 +9,6 @@ const attachToken = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   const { headers } = config;
-  console.log(config.data);
   const accessToken = localStorage.getItem(AUTH_TOKEN_KEY);
   return {
     ...config,

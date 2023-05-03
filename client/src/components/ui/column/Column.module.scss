@@ -1,0 +1,40 @@
+@use "@/styles/mixins";
+
+.container {
+  border-radius: 12px;
+  background: var(--color-gray-400);
+  padding: 12px 8px;
+  width: 272px;
+  max-height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  &-title {
+    @include mixins.baseTitle("extrabold-18");
+    padding: 0 8px;
+    padding-bottom: 4px;
+  }
+
+  &-input {
+    border: none;
+    background: none;
+    outline: none;
+    @include mixins.baseTitle("extrabold-18");
+  }
+
+  &-inner {
+    max-height: 480px;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    &::-webkit-scrollbar {
+      display: none;
+      background: transparent;
+      -webkit-appearance: none;
+      width: 0;
+      height: 0;
+    }
+  }
+}

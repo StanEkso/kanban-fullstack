@@ -2,16 +2,10 @@
 
 .container {
   color: var(--color-white);
-  $xSpacing: 4px;
-  $ySpacing: 8px;
   display: flex;
   flex-direction: column;
-  @include mixins.breakpoint-min("tablet") {
-    $xSpacing: 12px;
-    $ySpacing: 16px;
-  }
+
   @include mixins.baseTitle("extrabold-18");
-  padding: $ySpacing $xSpacing;
 
   gap: 8px;
 

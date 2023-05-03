@@ -1,3 +1,20 @@
-.sidebar__wrapper {
+@use "@/styles/mixins";
+.wrapper {
+  color: var(--color-white);
   border-right: 1px solid rgba(255, 255, 255, 0.25);
+  max-width: 48px;
+  $xSpacing: 4px;
+  $ySpacing: 8px;
+  @include mixins.breakpoint-min("tablet") {
+    $xSpacing: 12px;
+    $ySpacing: 16px;
+  }
+  padding: $ySpacing $xSpacing;
+  &-opened {
+    max-width: 10vw;
+  }
+
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
 }

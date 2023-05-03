@@ -26,7 +26,7 @@
     background: var(--color-blue);
 
     &:hover {
-      background: var(--color-blue);
+      background: var(--color-blue-hover);
     }
   }
 
@@ -34,13 +34,13 @@
     @include mixins.baseText("semibold-15");
 
     font-weight: 700;
-    padding: 8px 6px;
+    padding: 8px 12px;
+    background: var(--color-gray-500);
     border-radius: 12px;
     color: var(--color-white);
-    border: 1px solid var(--color-white);
 
     &:hover {
-      background: var(--color-gray);
+      background: var(--color-gray-500-hover);
     }
 
     &_selected {

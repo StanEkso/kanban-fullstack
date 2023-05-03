@@ -104,6 +104,7 @@ export class BoardController {
       moveTaskDto.taskId,
       moveTaskDto.insertIndex,
       user.id,
+      moveTaskDto.newColumnId,
     );
   }
 

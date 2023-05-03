@@ -70,6 +70,7 @@ export class TaskService {
       throw new BadRequestException('No such task!');
     }
     const columnId = newColumnId ?? taskCandidate.column.id;
+    console.log(columnId, taskCandidate.column.id);
     if (columnId !== taskCandidate.column.id) {
       await this.taskRepository.update(
         { id: taskCandidate.id },

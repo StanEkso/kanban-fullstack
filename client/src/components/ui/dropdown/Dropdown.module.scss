@@ -1,0 +1,26 @@
+@use "@/styles/mixins";
+.wrapper {
+  position: relative;
+  &-dropdown {
+    position: absolute;
+    border-radius: 12px;
+    background: var(--color-gray);
+    border: 1px solid var(--color-gray-500);
+    right: 0;
+    top: 32px;
+    display: none;
+    padding: 12px 8px;
+    flex-direction: column;
+    gap: 6px;
+    &-opened {
+      @include mixins.baseText("medium-15");
+      display: flex;
+    }
+  }
+
+  &-divider {
+    background: var(--color-gray-500-hover);
+    height: 1px;
+    width: 100%;
+  }
+}

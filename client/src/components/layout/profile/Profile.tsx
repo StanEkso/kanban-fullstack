@@ -1,6 +1,7 @@
 "use client";
 import { Icon } from "@/components/ui/Icon";
 import Button from "@/components/ui/button/Button";
+import Dropdown from "@/components/ui/dropdown/Dropdown";
 import { useAction, useSelector } from "@/helpers/hooks";
 import { actions } from "@/store";
 import { selectors } from "@/store/selectors";
@@ -14,8 +15,18 @@ const Profile = () => {
     return (
       <div className="flex flex-row gap-2 items-center">
         <span>{account.username}</span>
-        <Icon glyph="Arrow" />
-        <Button onClick={() => logout()}>Logout</Button>
+        <Dropdown>
+          <Dropdown.Item icon="User" url="/dashboard/profile">
+            Profile
+          </Dropdown.Item>
+          <Dropdown.Item icon="Dashboard" url="/dashboard">
+            Dashboard
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item icon="Logout" onClick={logout}>
+            Logout
+          </Dropdown.Item>
+        </Dropdown>
       </div>
     );
   }

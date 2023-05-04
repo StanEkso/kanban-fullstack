@@ -11,7 +11,7 @@
   }
   padding: $ySpacing $xSpacing;
   &-opened {
-    max-width: 10vw;
+    max-width: max(10vw, 140px);
   }
 
   display: flex;

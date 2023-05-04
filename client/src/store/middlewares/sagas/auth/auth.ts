@@ -45,6 +45,7 @@ function* handleRegister(action: PayloadAction<ISignupRequestData>) {
     const { data } = yield* effects.call(() =>
       http.post<ISignupResponseData>("/auth/signup", action.payload)
     );
+    yield effects.put(actions.modal.open("register-success"));
   } catch (error) {
     const { response } = error as AxiosError<ApiErrorWithDetails>;
     if (!response) {

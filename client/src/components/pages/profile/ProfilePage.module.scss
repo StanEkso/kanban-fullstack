@@ -1,0 +1,9 @@
+@use "@/styles/mixins";
+.container {
+  color: var(--color-white);
+  padding: 16px 8px;
+
+  &-title {
+    @include mixins.baseTitle("extrabold-32");
+  }
+}

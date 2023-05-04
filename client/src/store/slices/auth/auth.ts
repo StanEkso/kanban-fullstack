@@ -2,7 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { Account, AuthState } from "./types";
 import { makeActionCreator } from "@/helpers/redux";
-import { ISigninRequestData, ISignupRequestData } from "@/types/auth";
+import {
+  IChangePasswordRequestData,
+  ISigninRequestData,
+  ISignupRequestData,
+} from "@/types/auth";
 
 export const initialState: AuthState = {
   account: null,
@@ -34,6 +38,7 @@ export const actions = {
   ...slice.actions,
   signin: createAction<ISigninRequestData>("signin"),
   signup: createAction<ISignupRequestData>("signup"),
+  changePassword: createAction<IChangePasswordRequestData>("change-password"),
 };
 
 export default slice.reducer;

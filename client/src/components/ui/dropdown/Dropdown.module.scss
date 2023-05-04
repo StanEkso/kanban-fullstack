@@ -2,6 +2,7 @@
 .wrapper {
   position: relative;
   &-dropdown {
+    z-index: 100;
     position: absolute;
     border-radius: 12px;
     background: var(--color-gray);

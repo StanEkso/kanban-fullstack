@@ -16,7 +16,6 @@ import { AxiosError } from "axios";
 import { ApiErrorWithDetails } from "@/types/error";
 import { selectors } from "@/store/selectors";
 import { useRouter } from "next/navigation";
-type Props = {};
 
 const CreateBoard = () => {
   const { listener, payload, setPayload } = useForm<Record<string, any>>({

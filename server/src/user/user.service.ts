@@ -25,6 +25,17 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  async changeUserPassword(id: number, newPassword: string) {
+    await this.userRepository.update(
+      { id },
+      {
+        password: newPassword,
+      },
+    );
+    const updatedUser = await this.getUserById(id);
+    return this.prepareUser(updatedUser);
+  }
+
   async getUsers() {
     return await this.userRepository.find();
   }

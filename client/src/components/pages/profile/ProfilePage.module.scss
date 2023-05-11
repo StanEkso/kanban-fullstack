@@ -1,0 +1,21 @@
+@use "@/styles/mixins";
+.container {
+  color: var(--color-white);
+  padding: 16px 8px;
+
+  &-title {
+    @include mixins.baseTitle("extrabold-32");
+  }
+  &-values {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px 0;
+    align-items: center;
+  }
+  &-item {
+    @include mixins.baseTitle("extrabold-18");
+    &-value {
+      color: #f7f7f7;
+    }
+  }
+}

@@ -28,3 +28,9 @@ export interface IGetUserResponseData {
   email: string;
   username: string;
 }
+
+export interface IChangePasswordRequestData {
+  currentPassword: string;
+  newPasswordRepeat: string;
+  newPassword: string;
+}

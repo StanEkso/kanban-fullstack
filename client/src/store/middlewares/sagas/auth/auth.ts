@@ -2,6 +2,7 @@ import { http } from "@/api";
 import { AUTH_TOKEN_KEY } from "@/api/interceptors";
 import { actions } from "@/store";
 import {
+  IChangePasswordRequestData,
   IGetUserResponseData,
   ISigninRequestData,
   ISigninResponseData,
@@ -45,6 +46,7 @@ function* handleRegister(action: PayloadAction<ISignupRequestData>) {
     const { data } = yield* effects.call(() =>
       http.post<ISignupResponseData>("/auth/signup", action.payload)
     );
+    yield effects.put(actions.modal.open("register-success"));
   } catch (error) {
     const { response } = error as AxiosError<ApiErrorWithDetails>;
     if (!response) {
@@ -78,8 +80,37 @@ function* getUser() {
   }
 }
 
+function* handleChangePassword(
+  action: PayloadAction<IChangePasswordRequestData>
+) {
+  yield effects.put(actions.auth.startLoad());
+  yield effects.put(actions.error.remove("change-password"));
+  try {
+    const { data } = yield* effects.call(() =>
+      http.post<ISignupResponseData>("/auth/change", action.payload)
+    );
+    yield* logout();
+    yield* effects.put(actions.modal.open("change-password-success"));
+  } catch (error) {
+    const { response } = error as AxiosError<ApiErrorWithDetails>;
+    if (!response) {
+      return;
+    }
+    const { data } = response;
+    yield effects.put(
+      actions.error.append({
+        kind: "change-password",
+        error: data.message.toString(),
+      })
+    );
+  } finally {
+    yield effects.put(actions.auth.endLoad());
+  }
+}
+
 function* logout() {
   localStorage.removeItem(AUTH_TOKEN_KEY);
+  yield* effects.put(actions.auth.logout());
 }
 
 export function* initialize() {
@@ -88,5 +119,6 @@ export function* initialize() {
     effects.takeLatest(actions.auth.signin, handleLogin),
     effects.takeLatest(actions.auth.signup, handleRegister),
     effects.takeLatest(actions.auth.logout, logout),
+    effects.takeLatest(actions.auth.changePassword, handleChangePassword),
   ]);
 }

@@ -10,10 +10,15 @@ const tabs: Tab[] = [
     url: "/dashboard/profile",
     icon: "User",
   },
+  {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: "Dashboard",
+  },
 ];
 
 const SideBar = () => {
-  const [isOpened, setIsOpened] = useState(true);
+  const [isOpened, setIsOpened] = useState(false);
   return (
     <div
       className={cx(
@@ -21,7 +26,8 @@ const SideBar = () => {
         styles[`wrapper-${isOpened ? "opened" : "closed"}`]
       )}
     >
-      <div>
+      <Tabs tabs={tabs} opened={isOpened} />
+      <div className="mt-auto">
         <Icon
           glyph="NextArrow"
           onClick={() => setIsOpened(!isOpened)}
@@ -29,7 +35,6 @@ const SideBar = () => {
           className="mr-auto"
         />
       </div>
-      <Tabs tabs={tabs} opened={isOpened} />
     </div>
   );
 };

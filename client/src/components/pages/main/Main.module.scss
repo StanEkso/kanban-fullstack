@@ -3,11 +3,14 @@
 .screen {
   &-full {
     padding-top: 80px;
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 }
 
 .page {
+  max-width: 100%;
   &-title {
     text-align: center;
     color: var(--color-white);
@@ -23,7 +26,22 @@
     @include mixins.baseTitle("extrabold-15");
   }
   &-image {
-    max-width: 560px;
+    max-width: min(720px, 100%);
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.25));
+    margin: 0 auto;
+
+    &-wrapper {
+      position: relative;
+    }
+
+    &-phone {
+      @include mixins.breakpoint-min("tablet") {
+        position: absolute;
+        right: 15vw;
+        bottom: -10vh;
+        max-width: 200px;
+      }
+    }
   }
 
   &__wrapper {
